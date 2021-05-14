@@ -1,7 +1,12 @@
+import styles from '../styles/Components/Profile.module.css';
+
 export function Profile(): JSX.Element {
   return (
-    <div>
-      <img src="github.com/fariasmateuss.png" alt="Mateus's Profile" />
+    <div className={styles.profileContainer}>
+      <img
+        src="https://avatars.githubusercontent.com/u/55674918?v=4"
+        alt="Mateus's Profile"
+      />
 
       <div>
         <strong>Mateus V. Farias</strong>
