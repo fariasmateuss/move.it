@@ -1,6 +1,6 @@
-import styles from '../styles/Components/CompletedChallenges.module.css';
+import styles from '../styles/components/CompletedChallenges.module.css';
 
-export function CompletedChallenges(): JSX.Element {
+export function CompletedChallenges() {
   return (
     <div className={styles.completedChallengesContainer}>
       <span>Completed challenges</span>

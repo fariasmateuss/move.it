@@ -1,6 +1,6 @@
-import styles from '../styles/Components/Profile.module.css';
+import styles from '../styles/components/Profile.module.css';
 
-export function Profile(): JSX.Element {
+export function Profile() {
   return (
     <div className={styles.profileContainer}>
       <img

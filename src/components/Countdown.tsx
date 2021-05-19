@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import styles from '../styles/Components/Countdown.module.css';
+import styles from '../styles/components/Countdown.module.css';
 
 let countdownTimeout: NodeJS.Timeout;
 
-export function Countdown(): JSX.Element {
+export function Countdown() {
   const [time, setTime] = useState(0.1 * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
@@ -17,11 +17,11 @@ export function Countdown(): JSX.Element {
     .padStart(2, '0')
     .split('');
 
-  function startCountdown(): void {
+  function startCountdown() {
     setIsActive(true);
   }
 
-  function resetCountdown(): void {
+  function resetCountdown() {
     clearTimeout(countdownTimeout);
     setIsActive(false);
     setTime(0.1 * 60);
