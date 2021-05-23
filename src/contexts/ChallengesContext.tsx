@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
+import Cookies from 'js-cookie';
 import challenges from '../data/challenges.json';
 
 interface Challenge {
@@ -33,6 +34,8 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     Notification.requestPermission();
