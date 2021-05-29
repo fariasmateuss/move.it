@@ -15,7 +15,10 @@ export function Profile() {
 
       <div>
         <strong>Mateus V. Farias</strong>
-        <p>Level {level}</p>
+        <p>
+          <img src="icons/level.svg" alt="Level" />
+          Level {level}
+        </p>
       </div>
     </div>
   );
