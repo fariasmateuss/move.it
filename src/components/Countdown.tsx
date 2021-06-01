@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/Countdown.module.css';
@@ -12,6 +12,7 @@ export function Countdown() {
     startCountdown,
     resetCountdown,
   } = useContext(CountdownContext);
+  const [closeHover, setCloseHover] = useState(false);
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondsLeft, secondsRight] = String(seconds)
@@ -39,7 +40,8 @@ export function Countdown() {
           type="button"
           className={styles.countdownButton}
         >
-          Cycle Completed
+          Cycle Completed{' '}
+          <img src="/icons/check-circle.svg" alt="Check Circle" />
         </button>
       ) : (
         <>
@@ -47,9 +49,15 @@ export function Countdown() {
             <button
               onClick={resetCountdown}
               type="button"
+              onMouseEnter={() => setCloseHover(true)}
+              onMouseLeave={() => setCloseHover(false)}
               className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
             >
-              Quit
+              Quit{' '}
+              <img
+                src={closeHover ? '/icons/close-hover.svg' : '/icons/close.svg'}
+                alt="Close"
+              />
             </button>
           ) : (
             <button
@@ -57,7 +65,7 @@ export function Countdown() {
               type="button"
               className={styles.countdownButton}
             >
-              Start
+              Start <img src="/icons/play.svg" alt="Play" />
             </button>
           )}
         </>
