@@ -7,6 +7,7 @@ import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ExperienceBar } from '../components/ExperienceBar';
 import { Profile } from '../components/Profile';
+import { SideBar } from '../components/SideBar';
 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
@@ -25,10 +26,12 @@ export default function Home({
   challengesCompleted,
 }: HomeProps) {
   return (
-    <main>
+    <main className="wrapper">
       <Head>
         <title>Homapage | Move.it</title>
       </Head>
+
+      <SideBar />
 
       <ChallengesProvider
         level={level}

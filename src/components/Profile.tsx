@@ -10,7 +10,7 @@ export function Profile() {
     <div className={styles.profileContainer}>
       <img
         src="https://avatars.githubusercontent.com/u/55674918?v=4"
-        alt="Mateus's Profile"
+        alt="Mateus V. Farias"
       />
 
       <div>
