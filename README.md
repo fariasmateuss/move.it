@@ -2,6 +2,12 @@
   <img src="docs/resources/logo.png" />
 </p>
 
+<p align="center">
+  An app Pomodoro Timer written in Next.js
+</p>
+
+![Thumbnail Move.it](/docs/resources/thumbnail.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -30,8 +36,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 If you liked the project and want to cooperate feel free to fork this repository and send Pull Requests.
 
-All kinds of contributions are very welcome and appreciated
+All kinds of contributions are very welcome and appreciated.
 
 # License
 
-Released under the [MIT License](/LICENSE)
+Released under the [MIT License](/LICENSE).
