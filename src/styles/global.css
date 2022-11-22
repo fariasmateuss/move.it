@@ -25,7 +25,8 @@ body,
 input,
 textarea,
 button {
-  font: 400 16px 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 button,

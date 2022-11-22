@@ -1,7 +1,12 @@
 import { useContext, useState } from 'react';
+import { Rajdhani } from '@next/font/google';
 import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/Countdown.module.css';
+
+const rajdhaniVariable = Rajdhani({
+  weight: '600',
+});
 
 export function Countdown() {
   const {
@@ -20,7 +25,7 @@ export function Countdown() {
     .split('');
 
   return (
-    <div>
+    <div className={rajdhaniVariable.className}>
       <div className={styles.countdownContainer}>
         <div>
           <span>{minuteLeft}</span>

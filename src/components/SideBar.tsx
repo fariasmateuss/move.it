@@ -1,31 +1,19 @@
 import { FiHome, FiAward } from 'react-icons/fi';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import styles from '../styles/components/SideBar.module.css';
 
 export function SideBar() {
-  const [selectedButton, setSelectedButton] = useState('home');
   const route = useRouter();
-
-  function handleNavigateToHome(routePath: string) {
-    setSelectedButton(routePath);
-    route.push('/');
-  }
-
-  function handleNavigateToLeaderboard(routePath: string) {
-    setSelectedButton(routePath);
-    route.push('/leaderboard');
-  }
 
   return (
     <div className={styles.sideBarContainer}>
-      <img src="logo.png" alt="Move.it" />
+      <img src="/logo.png" alt="Move.it" />
       <nav>
         <button
           className={route.pathname === '/home' ? styles.selected : ''}
           type="button"
-          onClick={() => handleNavigateToHome('/')}
+          onClick={() => route.push('/')}
         >
           <div className={route.pathname === '/' ? styles.selected : ''} />
           <FiHome />
@@ -33,7 +21,7 @@ export function SideBar() {
         <button
           className={route.pathname === '/leaderboard' ? styles.selected : ''}
           type="button"
-          onClick={() => handleNavigateToLeaderboard('award')}
+          onClick={() => route.push('/leaderboard')}
         >
           <div
             className={route.pathname === '/leaderboard' ? styles.selected : ''}
