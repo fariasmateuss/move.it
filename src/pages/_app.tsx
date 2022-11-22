@@ -1,7 +1,13 @@
-import { AppProps } from 'next/app';
+import { Inter } from '@next/font/google';
 
 import '../styles/global.css';
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+const interVariable = Inter();
+
+export default function App({ Component, pageProps: { ...pageProps } }) {
+  return (
+    <main className={interVariable.className}>
+      <Component {...pageProps} />
+    </main>
+  );
 }
