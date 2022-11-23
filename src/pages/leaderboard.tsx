@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { SideBar } from '../components/SideBar';
 
@@ -16,6 +17,8 @@ export default function Leaderboard({
   currentExperience,
   challengesCompleted,
 }: LeaderboardProps) {
+  const { data: session } = useSession();
+
   return (
     <div className="wrapper">
       <ChallengesProvider
@@ -43,12 +46,9 @@ export default function Leaderboard({
             <div className={styles.position}>
               <span>1</span>
               <div className={styles.profile}>
-                <img
-                  src="https://avatars.githubusercontent.com/u/55674918?v=4"
-                  alt="Mateus V. Farias"
-                />
+                <img src={session?.user.image} alt={session?.user.name} />
                 <div>
-                  <span>Mateus V. Farias</span>
+                  <span>{session?.user.name}</span>
                   <p>
                     <img src="icons/level.svg" alt="Level" />
                     Level {level}

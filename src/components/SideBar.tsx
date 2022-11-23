@@ -11,11 +11,13 @@ export function SideBar() {
       <img src="/logo.png" alt="Move.it" />
       <nav>
         <button
-          className={route.pathname === '/home' ? styles.selected : ''}
+          className={route.pathname === '/dashboard' ? styles.selected : ''}
           type="button"
-          onClick={() => route.push('/')}
+          onClick={() => route.push('/dashboard')}
         >
-          <div className={route.pathname === '/' ? styles.selected : ''} />
+          <div
+            className={route.pathname === '/dashboard' ? styles.selected : ''}
+          />
           <FiHome />
         </button>
         <button
