@@ -1,72 +1,44 @@
 import { GetServerSideProps } from 'next';
+import { signIn } from 'next-auth/react';
+import { AiFillGithub, AiFillGoogleSquare } from 'react-icons/ai';
 
-import Head from 'next/head';
+import { withSSRGuest } from 'utils/withSSRGuest';
 
-import { ChallengeBox } from '../components/ChallengeBox';
-import { CompletedChallenges } from '../components/CompletedChallenges';
-import { Countdown } from '../components/Countdown';
-import { ExperienceBar } from '../components/ExperienceBar';
-import { Profile } from '../components/Profile';
-import { SideBar } from '../components/SideBar';
+import styles from 'styles/pages/Home.module.css';
 
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CountdownProvider } from '../contexts/CountdownContext';
+export const getServerSideProps: GetServerSideProps = withSSRGuest(
+  async () => ({
+    props: {},
+  })
+);
 
-import styles from '../styles/pages/Home.module.css';
-
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
-
-export default function Home({
-  level,
-  currentExperience,
-  challengesCompleted,
-}: HomeProps) {
+export default function Component() {
   return (
-    <main className="wrapper">
-      <Head>
-        <title>Homapage | Move.it</title>
-      </Head>
+    <div className={styles.container}>
+      <img className={styles.background} src="/background.svg" alt="" />
 
-      <SideBar />
+      <section className={styles.wrap}>
+        <div className={styles.form}>
+          <img src="/logo-full.svg" alt="" />
+          <h1>Welcome</h1>
+          <p>👋 Sign in to get started</p>
+          <div>
+            <button
+              type="button"
+              onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
+            >
+              <AiFillGithub /> Continue with GitHub
+            </button>
 
-      <ChallengesProvider
-        level={level}
-        currentExperience={currentExperience}
-        challengesCompleted={challengesCompleted}
-      >
-        <div className={styles.container}>
-          <ExperienceBar />
-
-          <section>
-            <CountdownProvider>
-              <div>
-                <Profile />
-                <CompletedChallenges />
-                <Countdown />
-              </div>
-              <div>
-                <ChallengeBox />
-              </div>
-            </CountdownProvider>
-          </section>
+            <button
+              type="button"
+              onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+            >
+              <AiFillGoogleSquare /> Continue with Google
+            </button>
+          </div>
         </div>
-      </ChallengesProvider>
-    </main>
+      </section>
+    </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level ?? 1),
-      currentExperience: Number(currentExperience ?? 0),
-      challengesCompleted: Number(challengesCompleted ?? 0),
-    },
-  };
-};

@@ -1,21 +1,32 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { SideBar } from '../components/SideBar';
+import { InferGetServerSidePropsType, type GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
 
-import styles from '../styles/pages/Leaderboard.module.css';
+import { ChallengesProvider } from 'contexts/ChallengesContext';
+import { SideBar } from 'components/SideBar';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
-interface LeaderboardProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+import styles from 'styles/pages/Leaderboard.module.css';
+
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+
+  return {
+    props: {
+      level: Number(level ?? 1),
+      currentExperience: Number(currentExperience ?? 0),
+      challengesCompleted: Number(challengesCompleted ?? 0),
+    },
+  };
+});
 
 export default function Leaderboard({
   level,
   currentExperience,
   challengesCompleted,
-}: LeaderboardProps) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { data: session } = useSession();
+
   return (
     <div className="wrapper">
       <ChallengesProvider
@@ -43,12 +54,9 @@ export default function Leaderboard({
             <div className={styles.position}>
               <span>1</span>
               <div className={styles.profile}>
-                <img
-                  src="https://avatars.githubusercontent.com/u/55674918?v=4"
-                  alt="Mateus V. Farias"
-                />
+                <img src={session?.user.image} alt={session?.user.name} />
                 <div>
-                  <span>Mateus V. Farias</span>
+                  <span>{session?.user.name}</span>
                   <p>
                     <img src="icons/level.svg" alt="Level" />
                     Level {level}
@@ -68,15 +76,3 @@ export default function Leaderboard({
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level ?? 1),
-      currentExperience: Number(currentExperience ?? 0),
-      challengesCompleted: Number(challengesCompleted ?? 0),
-    },
-  };
-};
