@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { SideBar } from '../components/SideBar';
+import { SideBar } from './SideBar';
 
 import styles from '../styles/pages/Leaderboard.module.css';
 
