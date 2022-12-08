@@ -1,7 +1,7 @@
 import { FiHome, FiAward } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
-import styles from '../styles/components/SideBar.module.css';
+import styles from 'styles/components/SideBar.module.css';
 
 export function SideBar() {
   const route = useRouter();

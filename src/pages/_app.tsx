@@ -1,7 +1,7 @@
 import { Inter } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
 
-import '../styles/global.css';
+import 'styles/global.css';
 
 const interVariable = Inter();
 

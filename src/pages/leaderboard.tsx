@@ -2,11 +2,11 @@ import Head from 'next/head';
 import { InferGetServerSidePropsType, type GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
 
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { SideBar } from '../components/SideBar';
-import { withSSRAuth } from '../utils/withSSRAuth';
+import { ChallengesProvider } from 'contexts/ChallengesContext';
+import { SideBar } from 'components/SideBar';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
-import styles from '../styles/pages/Leaderboard.module.css';
+import styles from 'styles/pages/Leaderboard.module.css';
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const { level, currentExperience, challengesCompleted } = ctx.req.cookies;

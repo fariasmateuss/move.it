@@ -1,8 +1,9 @@
 import { useContext, useState } from 'react';
 import { Rajdhani } from '@next/font/google';
-import { CountdownContext } from '../contexts/CountdownContext';
 
-import styles from '../styles/components/Countdown.module.css';
+import { CountdownContext } from 'contexts/CountdownContext';
+
+import styles from 'styles/components/Countdown.module.css';
 
 const rajdhaniVariable = Rajdhani({
   weight: '600',
