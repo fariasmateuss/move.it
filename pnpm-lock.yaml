@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@next/font': ^13.0.4
   '@types/js-cookie': ^2.2.6
+  '@types/lodash.noop': ^3.0.7
   '@types/node': ^15.0.2
   '@types/react': ^17.0.52
   '@types/react-dom': ^17.0.4
@@ -19,6 +20,7 @@ specifiers:
   eslint-plugin-react: ^7.23.2
   eslint-plugin-react-hooks: ^4.2.0
   js-cookie: ^2.2.1
+  lodash.noop: ^3.0.1
   next: 13.0.4
   next-auth: ^4.17.0
   prettier: ^2.3.0
@@ -31,6 +33,7 @@ dependencies:
   '@next/font': 13.0.4
   eslint-config-next: 13.0.4_77fvizpdb3y4icyeo2mf4eo7em
   js-cookie: 2.2.1
+  lodash.noop: 3.0.1
   next: 13.0.4_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.17.0_dcors23iqtgxrhrwosgnnc4xji
   react: 18.2.0
@@ -39,6 +42,7 @@ dependencies:
 
 devDependencies:
   '@types/js-cookie': 2.2.7
+  '@types/lodash.noop': 3.0.7
   '@types/node': 15.14.9
   '@types/react': 17.0.52
   '@types/react-dom': 17.0.18
@@ -302,6 +306,16 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+
+  /@types/lodash.noop/3.0.7:
+    resolution: {integrity: sha512-vaQ5DABJ4lDb58EVHnSTyOjkCem+Wj6QF0s8Ybhvt7kFyJCoRmjEajg6vg30jCN8CVZi89uRR5wqQWn724JQHg==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
+    dev: true
 
   /@types/node/15.14.9:
     resolution: {integrity: sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A==}
@@ -1649,6 +1663,10 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  /lodash.noop/3.0.1:
+    resolution: {integrity: sha512-TmYdmu/pebrdTIBDK/FDx9Bmfzs9x0sZG6QIJuMDTqEPfeciLcN13ij+cOd0i9vwJfBtbG9UQ+C7MkXgYxrIJg==}
+    dev: false
 
   /lodash.truncate/4.4.2:
     resolution: {integrity: sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==}
