@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 
 import { ChallengeBox } from '../components/ChallengeBox';
@@ -6,24 +6,31 @@ import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ExperienceBar } from '../components/ExperienceBar';
 import { Profile } from '../components/Profile';
-import { SideBar } from './SideBar';
+import { SideBar } from '../components/SideBar';
 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
+import { withSSRAuth } from '../utils/withSSRAuth';
 
 import styles from '../styles/pages/Dashboard.module.css';
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+
+  return {
+    props: {
+      level: Number(level ?? 1),
+      currentExperience: Number(currentExperience ?? 0),
+      challengesCompleted: Number(challengesCompleted ?? 0),
+    },
+  };
+});
 
 export default function Dashboard({
   level,
   currentExperience,
   challengesCompleted,
-}: HomeProps) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main className="wrapper">
       <Head>
@@ -57,15 +64,3 @@ export default function Dashboard({
     </main>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level ?? 1),
-      currentExperience: Number(currentExperience ?? 0),
-      challengesCompleted: Number(challengesCompleted ?? 0),
-    },
-  };
-};

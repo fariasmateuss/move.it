@@ -1,22 +1,30 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
+import { InferGetServerSidePropsType, type GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
+
 import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { SideBar } from './SideBar';
+import { SideBar } from '../components/SideBar';
+import { withSSRAuth } from '../utils/withSSRAuth';
 
 import styles from '../styles/pages/Leaderboard.module.css';
 
-interface LeaderboardProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+
+  return {
+    props: {
+      level: Number(level ?? 1),
+      currentExperience: Number(currentExperience ?? 0),
+      challengesCompleted: Number(challengesCompleted ?? 0),
+    },
+  };
+});
 
 export default function Leaderboard({
   level,
   currentExperience,
   challengesCompleted,
-}: LeaderboardProps) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: session } = useSession();
 
   return (
@@ -68,15 +76,3 @@ export default function Leaderboard({
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level ?? 1),
-      currentExperience: Number(currentExperience ?? 0),
-      challengesCompleted: Number(challengesCompleted ?? 0),
-    },
-  };
-};

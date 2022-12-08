@@ -1,7 +1,16 @@
+import { GetServerSideProps } from 'next';
 import { signIn } from 'next-auth/react';
 import { AiFillGithub, AiFillGoogleSquare } from 'react-icons/ai';
 
+import { withSSRGuest } from '../utils/withSSRGuest';
+
 import styles from '../styles/pages/Home.module.css';
+
+export const getServerSideProps: GetServerSideProps = withSSRGuest(
+  async () => ({
+    props: {},
+  })
+);
 
 export default function Component() {
   return (
