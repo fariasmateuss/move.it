@@ -25,6 +25,7 @@ body,
 input,
 textarea,
 button {
+  font-family: var(--inter-font);
   font-weight: 400;
   font-size: 1rem;
 }
@@ -32,6 +33,7 @@ button {
 button,
 a {
   cursor: pointer;
+
 }
 
 a {

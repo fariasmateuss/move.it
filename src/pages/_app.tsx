@@ -3,7 +3,9 @@ import { SessionProvider } from 'next-auth/react';
 
 import 'styles/global.css';
 
-const interVariable = Inter();
+const interVariable = Inter({
+  variable: '--inter-font',
+});
 
 export default function App({
   Component,
