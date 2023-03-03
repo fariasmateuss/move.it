@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@next/font": "^13.0.4",
+    "@prisma/client": "^4.11.0",
     "eslint-config-next": "^13.0.4",
     "js-cookie": "^2.2.1",
     "lodash.noop": "^3.0.1",
