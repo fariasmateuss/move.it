@@ -59,6 +59,9 @@ module.exports = {
       { loader: '@next/font/google', options: { subsets: ['latin'] } },
     ],
   },
+  images: {
+    domains: ['avatars.githubusercontent.com'],
+  },
   async headers() {
     return [
       {
