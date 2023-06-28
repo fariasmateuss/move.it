@@ -28,6 +28,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^4.29.6",
     "@types/js-cookie": "^2.2.6",
     "@types/lodash.noop": "^3.0.7",
     "@types/node": "^15.0.2",
