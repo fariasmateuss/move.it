@@ -1,25 +1,32 @@
-import { useSession } from 'next-auth/react';
-import { useContext } from 'react';
+import Image from 'next/image';
 
-import { ChallengesContext } from 'contexts/ChallengesContext';
-
+import { trpc } from 'utils/api';
 import styles from 'styles/components/Profile.module.css';
 
 export function Profile() {
-  const { data: session } = useSession();
-  const { level } = useContext(ChallengesContext);
+  const userQuery = trpc.user.getMe.useQuery();
 
   return (
     <div className={styles.profileContainer}>
-      <img src={session?.user.image} alt={session?.user.name} />
-
-      <div>
-        <strong>{session?.user.name}</strong>
-        <p>
-          <img src="/icons/level.svg" alt="Level" />
-          Level {level}
-        </p>
-      </div>
+      {userQuery.data && (
+        <>
+          <Image
+            src={String(userQuery?.data?.image)}
+            alt={`Profile pricture of ${userQuery?.data?.name}`}
+            width={88}
+            height={88}
+            quality={80}
+            priority
+          />
+          <div>
+            <strong>{userQuery?.data?.name}</strong>
+            <p>
+              <img src="/icons/level.svg" alt="Level" />
+              Level {userQuery?.data?.level}
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 }

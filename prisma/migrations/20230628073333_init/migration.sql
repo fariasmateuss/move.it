@@ -30,7 +30,10 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT,
     "emailVerified" DATETIME,
-    "image" TEXT
+    "image" TEXT,
+    "level" INTEGER NOT NULL DEFAULT 1,
+    "currentExperience" INTEGER NOT NULL DEFAULT 0,
+    "challengesCompleted" INTEGER NOT NULL DEFAULT 0
 );
 
 -- CreateTable

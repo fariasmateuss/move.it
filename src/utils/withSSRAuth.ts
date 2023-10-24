@@ -5,7 +5,11 @@ import {
 } from 'next';
 import { getSession } from 'next-auth/react';
 
-export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
+import { SIGN_IN_PAGE_PATH } from 'constants/routesPaths';
+
+export function withSSRAuth<P extends { [key: string]: unknown }>(
+  fn: GetServerSideProps<P>
+) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
@@ -14,7 +18,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
     if (!session) {
       return {
         redirect: {
-          destination: '/',
+          destination: SIGN_IN_PAGE_PATH,
           permanent: false,
         },
       };
@@ -25,7 +29,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
     } catch {
       return {
         redirect: {
-          destination: '/',
+          destination: SIGN_IN_PAGE_PATH,
           permanent: false,
         },
       };

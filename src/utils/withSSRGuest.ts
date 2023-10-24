@@ -5,7 +5,11 @@ import {
   GetServerSidePropsResult,
 } from 'next';
 
-export function withSSRGuest<T>(fn: GetServerSideProps<T>) {
+import { DASHBOARD_PAGE_PATH } from 'constants/routesPaths';
+
+export function withSSRGuest<T extends { [key: string]: unknown }>(
+  fn: GetServerSideProps<T>
+) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<T>> => {
@@ -14,7 +18,7 @@ export function withSSRGuest<T>(fn: GetServerSideProps<T>) {
     if (session) {
       return {
         redirect: {
-          destination: '/dashboard',
+          destination: DASHBOARD_PAGE_PATH,
           permanent: false,
         },
       };

@@ -15,23 +15,16 @@ export const serverSchema = z.object({
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string() : z.string().url()
   ),
-  GOOGLE_SECRET: z.string()
+  GOOGLE_SECRET: z.string(),
+  GOOGLE_ID: z.string(),
+  GITHUB_ID: z.string(),
+  GITHUB_SECRET: z.string(),
 });
 
-/**
- * This way you can ensure the app isn't built with invalid env vars.
- * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
- */
 export const clientSchema = z.object({
-  NEXT_PUBLIC_ENVIRONMENT: z.string()
+  NEXT_PUBLIC_ENVIRONMENT: z.string(),
 });
 
-/**
- * You can't destruct `process.env` as a regular object, so you have to do
- * it manually here. This is because Next.js evaluates this at build time,
- * and only used environment variables are included in the build.
- * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
- */
 export const clientEnv = {
-  NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT
+  NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
 };

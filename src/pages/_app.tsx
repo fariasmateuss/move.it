@@ -1,8 +1,9 @@
-import { Inter } from '@next/font/google';
-import { SessionProvider, SessionProviderProps } from 'next-auth/react';
 import type { AppType } from 'next/app';
+import { Inter } from '@next/font/google';
+import { SessionProviderProps } from 'next-auth/react';
 
 import { trpc } from 'utils/api';
+import { AppProvider } from 'contexts';
 import 'styles/global.css';
 
 const interVariable = Inter({
@@ -15,9 +16,9 @@ const App: AppType<SessionProviderProps> = ({
 }) => {
   return (
     <main className={interVariable.className}>
-      <SessionProvider session={session}>
+      <AppProvider session={session} Component={Component}>
         <Component {...pageProps} />
-      </SessionProvider>
+      </AppProvider>
     </main>
   );
 };
