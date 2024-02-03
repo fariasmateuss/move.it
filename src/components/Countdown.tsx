@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Rajdhani } from '@next/font/google';
+import { LuX } from 'react-icons/lu';
 
 import styles from 'styles/components/Countdown.module.css';
 import {
@@ -42,7 +43,7 @@ export function Countdown() {
           type="button"
           className={styles.countdownButton}
         >
-          Cycle Completed{' '}
+          Cycle Completed
           <img src="/icons/check-circle.svg" alt="Check Circle" />
         </button>
       ) : (
@@ -55,11 +56,8 @@ export function Countdown() {
               onMouseLeave={() => setCloseHover(false)}
               className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
             >
-              Quit{' '}
-              <img
-                src={closeHover ? '/icons/close-hover.svg' : '/icons/close.svg'}
-                alt="Close"
-              />
+              Quit
+              <LuX size={24} color={closeHover ? '#ffffff' : '#666666'} />
             </button>
           ) : (
             <button
@@ -67,7 +65,8 @@ export function Countdown() {
               type="button"
               className={styles.countdownButton}
             >
-              Start <img src="/icons/play.svg" alt="Play" />
+              Start
+              <img src="/icons/play.svg" alt="Play" />
             </button>
           )}
         </>
