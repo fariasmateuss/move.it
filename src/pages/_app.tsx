@@ -1,5 +1,5 @@
 import type { AppType } from 'next/app';
-import { Inter } from '@next/font/google';
+import { Inter } from 'next/font/google';
 import { SessionProviderProps } from 'next-auth/react';
 
 import { trpc } from 'utils/api';
@@ -8,6 +8,7 @@ import 'styles/global.css';
 
 const interVariable = Inter({
   variable: '--inter-font',
+  subsets: ['latin'],
 });
 
 const App: AppType<SessionProviderProps> = ({

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Rajdhani } from '@next/font/google';
+import { Rajdhani } from 'next/font/google';
 import { LuX } from 'react-icons/lu';
+import { clsx } from 'clsx';
 
 import styles from 'styles/components/Countdown.module.css';
 import {
@@ -10,6 +11,7 @@ import {
 
 const rajdhaniVariable = Rajdhani({
   weight: '600',
+  subsets: ['latin'],
 });
 
 export function Countdown() {
@@ -54,10 +56,16 @@ export function Countdown() {
               type="button"
               onMouseEnter={() => setCloseHover(true)}
               onMouseLeave={() => setCloseHover(false)}
-              className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+              className={clsx(
+                styles.countdownButton,
+                styles.countdownButtonActive
+              )}
             >
               Quit
-              <LuX size={24} color={closeHover ? '#ffffff' : '#666666'} />
+              <LuX
+                size={24}
+                color={closeHover ? 'var(--white)' : 'var(--text)'}
+              />
             </button>
           ) : (
             <button
