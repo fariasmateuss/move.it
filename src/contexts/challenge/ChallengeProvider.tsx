@@ -17,21 +17,20 @@ import {
 import { Challenge } from './types';
 
 export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
-  const utils = trpc.useContext();
-  const userQuery = trpc.user.getMe.useQuery(undefined, {
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const utils = trpc.useUtils();
+  const userQuery = trpc.user.getMe.useQuery();
 
   const challengesCompleted = userQuery?.data?.challengesCompleted ?? 0;
   const level = userQuery?.data?.level ?? 0;
   const currentExperience = userQuery?.data?.currentExperience ?? 0;
 
-  const userUpdateMutation = trpc.user.update.useMutation({
+  const updateUserMutation = trpc.user.update.useMutation({
     async onMutate({ data }) {
       await utils.user.getMe.cancel();
       const user = utils.user.getMe.getData();
-      if (!user) return;
+      if (!user) {
+        return;
+      }
       utils.user.getMe.setData(undefined, {
         ...user,
         ...data,
@@ -51,14 +50,14 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   }, []);
 
   const levelUp = useCallback(async () => {
-    await userUpdateMutation.mutateAsync({
+    await updateUserMutation.mutateAsync({
       data: {
         level: level + 1,
       },
     });
 
     setIsLevelUpModalOpen(true);
-  }, [level, userUpdateMutation]);
+  }, [level, updateUserMutation]);
 
   const closeLevelUpModal = useCallback(() => {
     setIsLevelUpModalOpen(false);
@@ -99,21 +98,21 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       await levelUp();
     }
 
-    await userUpdateMutation.mutateAsync({
+    setActiveChallenge(null);
+
+    await updateUserMutation.mutateAsync({
       data: {
         currentExperience: finalExperience,
         challengesCompleted: challengesCompleted + 1,
       },
     });
-
-    setActiveChallenge(null);
   }, [
     activeChallenge,
     challengesCompleted,
     currentExperience,
     experienceToNextLevel,
     levelUp,
-    userUpdateMutation,
+    updateUserMutation,
   ]);
 
   const challengeState = useMemo(

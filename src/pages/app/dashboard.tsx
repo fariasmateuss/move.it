@@ -33,16 +33,14 @@ function DashboardContent() {
       </Head>
       <ExperienceBar />
       <section>
-        <CountdownProvider>
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
-          <div>
-            <ChallengeBox />
-          </div>
-        </CountdownProvider>
+        <div>
+          <Profile />
+          <CompletedChallenges />
+          <Countdown />
+        </div>
+        <div>
+          <ChallengeBox />
+        </div>
       </section>
     </div>
   );
