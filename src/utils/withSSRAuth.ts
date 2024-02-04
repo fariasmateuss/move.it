@@ -3,9 +3,10 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from 'next';
-import { getSession } from 'next-auth/react';
 
 import { SIGN_IN_PAGE_PATH } from 'constants/routesPaths';
+
+import { auth } from 'server/auth';
 
 export function withSSRAuth<P extends { [key: string]: unknown }>(
   fn: GetServerSideProps<P>
@@ -13,7 +14,7 @@ export function withSSRAuth<P extends { [key: string]: unknown }>(
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
-    const session = await getSession(ctx);
+    const session = await auth(ctx.req, ctx.res);
 
     if (!session) {
       return {

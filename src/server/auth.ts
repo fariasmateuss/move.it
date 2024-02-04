@@ -1,11 +1,17 @@
-import { type GetServerSidePropsContext } from 'next';
-import { unstable_getServerSession } from 'next-auth';
+import {
+  NextApiRequest,
+  NextApiResponse,
+  type GetServerSidePropsContext,
+} from 'next';
+import { getServerSession } from 'next-auth';
 
-import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { authOptions } from 'lib/auth';
 
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext['req'];
-  res: GetServerSidePropsContext['res'];
-}) => {
-  return unstable_getServerSession(ctx.req, ctx.res, authOptions);
-};
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions);
+}

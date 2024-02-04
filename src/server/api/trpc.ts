@@ -3,7 +3,7 @@ import { type Session } from 'next-auth';
 
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
-import { getServerAuthSession } from '../auth';
+import { auth } from '../auth';
 import { prisma } from '../db';
 
 type CreateContextOptions = {
@@ -20,7 +20,7 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
-  const session = await getServerAuthSession({ req, res });
+  const session = await auth(req, res);
 
   return createInnerTRPCContext({
     session,
