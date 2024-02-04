@@ -12,7 +12,7 @@ export function Profile() {
         <>
           <Image
             src={String(userQuery?.data?.image)}
-            alt={`Profile pricture of ${userQuery?.data?.name}`}
+            alt={`Profile picture of ${userQuery?.data?.name}`}
             width={88}
             height={88}
             quality={80}
