@@ -15,11 +15,15 @@ export const getServerSideProps: GetServerSideProps = withSSRGuest(
 export default function SignIn() {
   return (
     <div className={styles.container}>
-      <img className={styles.background} src="/background.svg" alt="Move.it" />
+      <img
+        className={styles.background}
+        src="/images/background.svg"
+        alt="Move.it"
+      />
 
       <section className={styles.wrap}>
         <div className={styles.form}>
-          <img src="/logo-full.svg" alt="Move.it" />
+          <img src="/images/logo-full.svg" alt="Move.it" />
           <h1>Welcome</h1>
           <p>👋 Sign in to get started</p>
           <div>

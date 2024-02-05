@@ -60,7 +60,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
 
     setActiveChallenge(challenge);
 
-    const audio = new Audio('/notification.mp3').play();
+    const audio = new Audio('/sounds/notification.mp3').play();
 
     if (Notification.permission === 'granted') {
       const notification = new Notification('New challenge! 🎉', {

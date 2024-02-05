@@ -14,7 +14,7 @@ export function SideBar() {
   return (
     <div className={styles.sideBarContainer}>
       <Image
-        src="/logo.png"
+        src="/images/logo.png"
         alt="Move.it"
         width={48}
         height={42}
