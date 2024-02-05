@@ -1,54 +1,47 @@
 .sideBarContainer {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
 
   position: relative;
   width: 112px;
   height: 100vh;
-
   background: var(--white);
 }
 
-.sideBarContainer img {
-  position: absolute;
-  left: 28.57%;
-  right: 28.57%;
-  top: 3.9%;
-  bottom: 90.98%;
+.sideBarLogo {
+  margin-top: 2rem;
 }
 
-.sideBarContainer nav {
+.sideBarNav {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
+  gap: 2rem;
 }
 
-.sideBarContainer nav > button {
+.sideBarContainer button {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-
-  width: 100%;
-  height: 5rem;
   border: 0;
   outline: 0;
   cursor: pointer;
-
   background: none;
   color: var(--text);
 }
 
-.sideBarContainer nav > button.selected {
+.sideBarNav button.selected {
   color: var(--blue);
 }
 
-.sideBarContainer nav > button:first-child {
-  margin-bottom: 2rem;
+.sideBarNav button {
+  height: 5rem;
 }
 
-.sideBarContainer nav > button > div {
+.sideBarNav button > div {
   position: absolute;
   width: 0.3rem;
   height: 100%;
@@ -67,12 +60,11 @@
   }
 }
 
-.sideBarContainer nav > button > div.selected {
+.sideBarNav button > div.selected {
   background: var(--blue);
   animation: scale-up 0.2s;
 }
 
-.sideBarContainer button svg {
-  height: 2rem;
-  width: 2rem;
+.logOutButton {
+  margin-bottom: 2rem;
 }
