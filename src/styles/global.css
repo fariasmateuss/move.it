@@ -14,6 +14,7 @@
   --red: #e83f5b;
   --green: #4cd62b;
   --blue: #5965e0;
+  --blue-secondary: #4953B8;
 }
 
 body {
@@ -33,16 +34,11 @@ button {
 button,
 a {
   cursor: pointer;
-
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.wrapper {
-  display: flex;
 }
 
 @media (max-width: 1080px) {

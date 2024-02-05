@@ -1,20 +1,24 @@
-import { getSession } from 'next-auth/react';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from 'next';
 
-export function withSSRGuest<T>(fn: GetServerSideProps<T>) {
+import { DASHBOARD_PAGE_PATH } from 'constants/routesPaths';
+import { auth } from 'server/auth';
+
+export function withSSRGuest<T extends { [key: string]: unknown }>(
+  fn: GetServerSideProps<T>
+) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<T>> => {
-    const session = await getSession(ctx);
+    const session = await auth(ctx.req, ctx.res);
 
     if (session) {
       return {
         redirect: {
-          destination: '/dashboard',
+          destination: DASHBOARD_PAGE_PATH,
           permanent: false,
         },
       };

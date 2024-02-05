@@ -14,10 +14,11 @@
 .container {
   background: var(--white);
   width: 100%;
-  max-width: 400px;
+  max-width: 398px;
   padding: 2rem 3rem;
   border-radius: 5px;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(180deg, #FFF 0%, #FFF 100%);
+  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.05);
   text-align: center;
   position: relative;
 }
@@ -25,18 +26,27 @@
 .container header {
   font-size: 8.75rem;
   font-weight: 600;
+  line-height: 6.25rem;
   color: var(--blue);
   background: url('/icons/levelup.svg') no-repeat center;
   background-size: contain;
+  text-shadow: 0px 10px 16px rgba(89, 101, 224, 0.30);
+  margin-bottom: 1.5rem;
 }
 
 .container strong {
-  font-size: 2.25rem;
   color: var(--title);
+  font-size: 2.25rem;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 2.5rem;
 }
 
 .container p {
   font-size: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.875rem;
   color: var(--text);
   margin-top: 0.25rem;
 }
@@ -48,4 +58,8 @@
   background: transparent;
   border: 0;
   font-size: 0px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 }
+

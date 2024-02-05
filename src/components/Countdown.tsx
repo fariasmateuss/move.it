@@ -1,23 +1,22 @@
-import { useContext, useState } from 'react';
-import { Rajdhani } from '@next/font/google';
-
-import { CountdownContext } from 'contexts/CountdownContext';
+import { useState } from 'react';
+import { Rajdhani } from 'next/font/google';
+import { LuX } from 'react-icons/lu';
+import { clsx } from 'clsx';
 
 import styles from 'styles/components/Countdown.module.css';
+import {
+  useCountdownDispatch,
+  useCountdownState,
+} from 'contexts/countdown/CountdownContext';
 
 const rajdhaniVariable = Rajdhani({
   weight: '600',
+  subsets: ['latin'],
 });
 
 export function Countdown() {
-  const {
-    minutes,
-    seconds,
-    hasFinished,
-    isActive,
-    startCountdown,
-    resetCountdown,
-  } = useContext(CountdownContext);
+  const { minutes, seconds, hasFinished, isActive } = useCountdownState();
+  const { startCountdown, resetCountdown } = useCountdownDispatch();
   const [closeHover, setCloseHover] = useState(false);
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
@@ -46,7 +45,7 @@ export function Countdown() {
           type="button"
           className={styles.countdownButton}
         >
-          Cycle Completed{' '}
+          Cycle Completed
           <img src="/icons/check-circle.svg" alt="Check Circle" />
         </button>
       ) : (
@@ -57,12 +56,15 @@ export function Countdown() {
               type="button"
               onMouseEnter={() => setCloseHover(true)}
               onMouseLeave={() => setCloseHover(false)}
-              className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+              className={clsx(
+                styles.countdownButton,
+                styles.countdownButtonActive
+              )}
             >
-              Quit{' '}
-              <img
-                src={closeHover ? '/icons/close-hover.svg' : '/icons/close.svg'}
-                alt="Close"
+              Quit
+              <LuX
+                size={24}
+                color={closeHover ? 'var(--white)' : 'var(--text)'}
               />
             </button>
           ) : (
@@ -71,7 +73,8 @@ export function Countdown() {
               type="button"
               className={styles.countdownButton}
             >
-              Start <img src="/icons/play.svg" alt="Play" />
+              Start
+              <img src="/icons/play.svg" alt="Play" />
             </button>
           )}
         </>

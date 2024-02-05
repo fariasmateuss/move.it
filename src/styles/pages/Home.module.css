@@ -53,10 +53,16 @@
 }
 
 .form button {
+  border: 0;
+  border-radius: 5px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  color: var(--title);
+  background-color: var(--background);
 
   width: 280px;
   height: 49px;

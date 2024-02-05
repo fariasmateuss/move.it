@@ -1,21 +1,27 @@
-import { Inter } from '@next/font/google';
-import { SessionProvider } from 'next-auth/react';
+import type { AppType } from 'next/app';
+import { Inter } from 'next/font/google';
+import { SessionProviderProps } from 'next-auth/react';
 
+import { trpc } from 'utils/api';
+import { AppProvider } from 'contexts';
 import 'styles/global.css';
 
 const interVariable = Inter({
   variable: '--inter-font',
+  subsets: ['latin'],
 });
 
-export default function App({
+const App: AppType<SessionProviderProps> = ({
   Component,
   pageProps: { session, ...pageProps },
-}) {
+}) => {
   return (
     <main className={interVariable.className}>
-      <SessionProvider session={session}>
+      <AppProvider session={session} Component={Component}>
         <Component {...pageProps} />
-      </SessionProvider>
+      </AppProvider>
     </main>
   );
-}
+};
+
+export default trpc.withTRPC(App);
