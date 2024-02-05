@@ -16,7 +16,7 @@ import styles from 'styles/pages/Dashboard.module.css';
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const ssr = await ssrInit(ctx);
-  await ssr.user.getMe.prefetch();
+  await ssr.user.getMe.fetch();
 
   return {
     props: {

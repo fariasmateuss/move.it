@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { type GetServerSideProps } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 
 import { withSSRAuth } from 'utils/withSSRAuth';
 import { trpc } from 'utils/api';
@@ -7,19 +7,24 @@ import { ssrInit } from 'server/api/ssr';
 
 import styles from 'styles/pages/Leaderboard.module.css';
 
-export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+export const getServerSideProps = withSSRAuth(async ctx => {
   const ssr = await ssrInit(ctx);
-  await ssr.user.getAllUsersOrderByLevel.prefetch();
+  const users = await ssr.user.allUsersOrderByLevel.fetch();
 
   return {
     props: {
       trpcState: ssr.dehydrate(),
+      users,
     },
   };
 });
 
-export default function Leaderboard() {
-  const usersQuery = trpc.user.getAllUsersOrderByLevel.useQuery();
+export default function Leaderboard({
+  users,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const usersQuery = trpc.user.allUsersOrderByLevel.useQuery(undefined, {
+    initialData: users,
+  });
 
   return (
     <div className={styles.leaderboardContainer}>
@@ -39,7 +44,7 @@ export default function Leaderboard() {
           <span>EXPERIENCE</span>
         </div>
         {(usersQuery?.data ?? []).map((user, index) => (
-          <div className={styles.position}>
+          <div key={user.id} className={styles.position}>
             <span>{index + 1}</span>
             <div className={styles.profile}>
               <img

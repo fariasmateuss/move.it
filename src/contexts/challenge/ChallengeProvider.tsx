@@ -9,6 +9,8 @@ import {
 import challenges from 'data/challenges.json';
 import { trpc } from 'utils/api';
 import { LevelUpModal } from 'components/LevelUpModal';
+import { useLevelUpMutation } from 'hooks/useLevelup';
+import { useChallengeCompletedMutation } from 'hooks/useChallengeCompleted';
 
 import {
   ChallengeDispatchProvider,
@@ -18,25 +20,14 @@ import { Challenge } from './types';
 
 export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   const utils = trpc.useUtils();
-  const userQuery = trpc.user.getMe.useQuery();
+  const userData = utils.user.getMe.getData();
 
-  const challengesCompleted = userQuery?.data?.challengesCompleted ?? 0;
-  const level = userQuery?.data?.level ?? 0;
-  const currentExperience = userQuery?.data?.currentExperience ?? 0;
+  const challengesCompleted = userData?.challengesCompleted ?? 0;
+  const level = userData?.level ?? 1;
+  const currentExperience = userData?.currentExperience ?? 0;
 
-  const updateUserMutation = trpc.user.update.useMutation({
-    async onMutate({ data }) {
-      await utils.user.getMe.cancel();
-      const user = utils.user.getMe.getData();
-      if (!user) {
-        return;
-      }
-      utils.user.getMe.setData(undefined, {
-        ...user,
-        ...data,
-      });
-    },
-  });
+  const levelUpMutation = useLevelUpMutation();
+  const challengeCompletedMutation = useChallengeCompletedMutation();
 
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(
     null
@@ -49,15 +40,15 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     Notification.requestPermission();
   }, []);
 
-  const levelUp = useCallback(async () => {
-    await updateUserMutation.mutateAsync({
+  const levelUp = useCallback(() => {
+    levelUpMutation.mutate({
       data: {
         level: level + 1,
       },
     });
 
     setIsLevelUpModalOpen(true);
-  }, [level, updateUserMutation]);
+  }, [level, levelUpMutation]);
 
   const closeLevelUpModal = useCallback(() => {
     setIsLevelUpModalOpen(false);
@@ -86,7 +77,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     setActiveChallenge(null);
   }, []);
 
-  const completedChallenge = useCallback(async () => {
+  const completedChallenge = useCallback(() => {
     if (!activeChallenge) return;
 
     const { amount } = activeChallenge;
@@ -95,24 +86,24 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
 
     if (finalExperience >= experienceToNextLevel) {
       finalExperience -= experienceToNextLevel;
-      await levelUp();
+      levelUp();
     }
 
-    setActiveChallenge(null);
-
-    await updateUserMutation.mutateAsync({
+    challengeCompletedMutation.mutate({
       data: {
         currentExperience: finalExperience,
         challengesCompleted: challengesCompleted + 1,
       },
     });
+
+    setActiveChallenge(null);
   }, [
     activeChallenge,
     challengesCompleted,
     currentExperience,
     experienceToNextLevel,
     levelUp,
-    updateUserMutation,
+    challengeCompletedMutation,
   ]);
 
   const challengeState = useMemo(

@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
+import { NextComponentType, NextPageContext } from 'next';
 import { SessionProvider, SessionProviderProps } from 'next-auth/react';
 
-import SignInPage from 'pages';
 import { Layout } from 'components/Layout';
-import { NextComponentType, NextPageContext } from 'next';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SignInPage from 'pages';
 
 type AppProps = SessionProviderProps & {
   Component: NextComponentType<NextPageContext, unknown, unknown>;
@@ -23,12 +24,24 @@ export function AppProvider({
   Component,
 }: PropsWithChildren<AppProps>) {
   const shouldRenderLayout = !PAGE_LAYOUT_BLACK_LIST.includes(Component.name);
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
 
   return (
-    <SessionProvider session={session}>
-      {shouldRenderLayout ? <Layout>{children}</Layout> : children}
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session}>
+        {shouldRenderLayout ? <Layout>{children}</Layout> : children}
 
-      <ReactQueryDevtools initialIsOpen />
-    </SessionProvider>
+        <ReactQueryDevtools initialIsOpen position="bottom-right" />
+      </SessionProvider>
+    </QueryClientProvider>
   );
 }

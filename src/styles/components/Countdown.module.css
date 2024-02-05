@@ -75,6 +75,10 @@
   margin-left: 5px;
 }
 
+.countdownButton img {
+  margin-left: 5px;
+}
+
 .countdownButton:disabled {
   background: var(--white);
   color: var(--text);

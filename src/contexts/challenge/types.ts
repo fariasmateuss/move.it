@@ -14,8 +14,8 @@ export type ChallengeStateContextData = {
 
 export type ChallengeDispatchContextData = {
   startNewChallenge: () => Promise<void> | Notification;
-  levelUp: () => Promise<void>;
+  levelUp: () => void;
   resetChallenge: () => void;
-  completedChallenge: () => Promise<void>;
+  completedChallenge: () => void;
   closeLevelUpModal: () => void;
 };

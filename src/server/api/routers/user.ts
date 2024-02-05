@@ -11,7 +11,7 @@ export const userRouter = createTRPCRouter({
 
     return user;
   }),
-  getAllUsersOrderByLevel: protectedProcedure.query(async ({ ctx }) => {
+  allUsersOrderByLevel: protectedProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.findMany({
       orderBy: {
         level: 'desc',
@@ -20,13 +20,30 @@ export const userRouter = createTRPCRouter({
 
     return users;
   }),
-  update: protectedProcedure
+  levelUp: protectedProcedure
     .input(
       z.object({
         data: z.object({
-          currentExperience: z.number().optional(),
-          challengesCompleted: z.number().optional(),
-          level: z.number().optional(),
+          level: z.number(),
+        }),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: input.data,
+      });
+
+      return user;
+    }),
+  completedChallenge: protectedProcedure
+    .input(
+      z.object({
+        data: z.object({
+          currentExperience: z.number(),
+          challengesCompleted: z.number(),
         }),
       })
     )

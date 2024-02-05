@@ -3,8 +3,8 @@ import {
   useChallengeState,
 } from 'contexts/challenge/ChallengeContext';
 
-import styles from 'styles/components/ChallengeBox.module.css';
 import { useCountdownDispatch } from 'contexts/countdown/CountdownContext';
+import styles from 'styles/components/ChallengeBox.module.css';
 
 export function ChallengeBox() {
   const { activeChallenge } = useChallengeState();

@@ -43,7 +43,7 @@ model User {
   image               String?
   accounts            Account[]
   sessions            Session[]
-  level               Int       @default(0)
+  level               Int       @default(1)
   currentExperience   Int       @default(0)
   challengesCompleted Int       @default(0)
 }

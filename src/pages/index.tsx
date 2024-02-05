@@ -1,11 +1,10 @@
 import { GetServerSideProps } from 'next';
 import { signIn } from 'next-auth/react';
-import { AiFillGithub, AiFillGoogleSquare } from 'react-icons/ai';
+import { AiFillGithub } from 'react-icons/ai';
 
 import { withSSRGuest } from 'utils/withSSRGuest';
-
-import styles from 'styles/pages/Home.module.css';
 import { DASHBOARD_PAGE_PATH } from 'constants/routesPaths';
+import styles from 'styles/pages/Home.module.css';
 
 export const getServerSideProps: GetServerSideProps = withSSRGuest(
   async () => ({
@@ -16,11 +15,11 @@ export const getServerSideProps: GetServerSideProps = withSSRGuest(
 export default function SignIn() {
   return (
     <div className={styles.container}>
-      <img className={styles.background} src="/background.svg" alt="" />
+      <img className={styles.background} src="/background.svg" alt="Move.it" />
 
       <section className={styles.wrap}>
         <div className={styles.form}>
-          <img src="/logo-full.svg" alt="" />
+          <img src="/logo-full.svg" alt="Move.it" />
           <h1>Welcome</h1>
           <p>👋 Sign in to get started</p>
           <div>
@@ -31,15 +30,6 @@ export default function SignIn() {
               }
             >
               <AiFillGithub /> Continue with GitHub
-            </button>
-
-            <button
-              type="button"
-              onClick={() =>
-                signIn('google', { callbackUrl: DASHBOARD_PAGE_PATH })
-              }
-            >
-              <AiFillGoogleSquare /> Continue with Google
             </button>
           </div>
         </div>
