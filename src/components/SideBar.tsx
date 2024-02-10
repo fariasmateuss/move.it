@@ -35,6 +35,7 @@ export function SideBar() {
       <div className={styles.sideBarNav}>
         {SIDEBAR_NAVIGATION.map(({ path, Icon }) => (
           <button
+            key={path}
             className={clsx(route.pathname === path && styles.selected)}
             type="button"
             onClick={() => route.push(path)}
