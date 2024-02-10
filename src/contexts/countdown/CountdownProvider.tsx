@@ -15,7 +15,7 @@ let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
   const { startNewChallenge } = useChallengeDispatch();
-  const [time, setTime] = useState(0.1 * 60);
+  const [time, setTime] = useState(30 * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
 
@@ -52,12 +52,12 @@ export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
       hasFinished,
       isActive,
     }),
-    [minutes, seconds, hasFinished, isActive]
+    [minutes, seconds, hasFinished, isActive],
   );
 
   const countdownDispatch = useMemo(
     () => ({ startCountdown, resetCountdown }),
-    [startCountdown, resetCountdown]
+    [startCountdown, resetCountdown],
   );
 
   return (

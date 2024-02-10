@@ -9,7 +9,7 @@ import styles from 'styles/pages/Home.module.css';
 export const getServerSideProps: GetServerSideProps = withSSRGuest(
   async () => ({
     props: {},
-  })
+  }),
 );
 
 export default function SignIn() {

@@ -9,10 +9,10 @@ import { SIGN_IN_PAGE_PATH } from 'constants/routesPaths';
 import { auth } from 'server/auth';
 
 export function withSSRAuth<P extends { [key: string]: unknown }>(
-  fn: GetServerSideProps<P>
+  fn: GetServerSideProps<P>,
 ) {
   return async (
-    ctx: GetServerSidePropsContext
+    ctx: GetServerSidePropsContext,
   ): Promise<GetServerSidePropsResult<P>> => {
     const session = await auth(ctx.req, ctx.res);
 

@@ -26,7 +26,7 @@ export const userRouter = createTRPCRouter({
         data: z.object({
           level: z.number(),
         }),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.update({
@@ -45,7 +45,7 @@ export const userRouter = createTRPCRouter({
           currentExperience: z.number(),
           challengesCompleted: z.number(),
         }),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.update({

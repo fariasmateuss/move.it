@@ -58,7 +58,7 @@ export function Countdown() {
               onMouseLeave={() => setCloseHover(false)}
               className={clsx(
                 styles.countdownButton,
-                styles.countdownButtonActive
+                styles.countdownButtonActive,
               )}
             >
               Quit

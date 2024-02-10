@@ -29,7 +29,7 @@ export const useChallengeDispatch = () => {
 
   if (!context) {
     throw new Error(
-      'useChallengeDispatch must be used within ChallengeProvider'
+      'useChallengeDispatch must be used within ChallengeProvider',
     );
   }
 

@@ -17,7 +17,7 @@
   max-width: 398px;
   padding: 2rem 3rem;
   border-radius: 5px;
-  background: linear-gradient(180deg, #FFF 0%, #FFF 100%);
+  background: linear-gradient(180deg, #fff 0%, #fff 100%);
   box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.05);
   text-align: center;
   position: relative;
@@ -30,7 +30,7 @@
   color: var(--blue);
   background: url('/icons/levelup.svg') no-repeat center;
   background-size: contain;
-  text-shadow: 0px 10px 16px rgba(89, 101, 224, 0.30);
+  text-shadow: 0px 10px 16px rgba(89, 101, 224, 0.3);
   margin-bottom: 1.5rem;
 }
 
@@ -62,4 +62,3 @@
   height: 40px;
   flex-shrink: 0;
 }
-

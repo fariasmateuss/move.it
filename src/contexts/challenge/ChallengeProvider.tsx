@@ -30,7 +30,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   const challengeCompletedMutation = useChallengeCompletedMutation();
 
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(
-    null
+    null,
   );
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
@@ -120,7 +120,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       challengesCompleted,
       activeChallenge,
       experienceToNextLevel,
-    ]
+    ],
   );
 
   const challengeDispatch = useMemo(
@@ -137,7 +137,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       resetChallenge,
       completedChallenge,
       closeLevelUpModal,
-    ]
+    ],
   );
 
   return (

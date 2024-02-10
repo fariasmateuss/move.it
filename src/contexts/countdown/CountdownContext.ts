@@ -30,7 +30,7 @@ export const useCountdownDispatch = () => {
 
   if (!context) {
     throw new Error(
-      'useCountdownDispatch must be used within CountdownProvider'
+      'useCountdownDispatch must be used within CountdownProvider',
     );
   }
 

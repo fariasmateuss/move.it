@@ -8,10 +8,10 @@ import { DASHBOARD_PAGE_PATH } from 'constants/routesPaths';
 import { auth } from 'server/auth';
 
 export function withSSRGuest<T extends { [key: string]: unknown }>(
-  fn: GetServerSideProps<T>
+  fn: GetServerSideProps<T>,
 ) {
   return async (
-    ctx: GetServerSidePropsContext
+    ctx: GetServerSidePropsContext,
   ): Promise<GetServerSidePropsResult<T>> => {
     const session = await auth(ctx.req, ctx.res);
 
