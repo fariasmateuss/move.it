@@ -1,32 +1,37 @@
-import Image from 'next/image';
-
 import { trpc } from 'utils/api';
-import { useChallengeState } from 'contexts/challenge/ChallengeContext';
-import styles from 'styles/components/Profile.module.css';
+import { useChallengeState } from 'contexts/challenge/challenge-context';
+import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar';
+
+import { Icons } from './icons';
 
 export function Profile() {
-  const utils = trpc.useUtils();
-  const userData = utils.user.getMe.getData();
   const { level } = useChallengeState();
 
+  const utils = trpc.useUtils();
+  const userData = utils.user.getMe.getData();
+
+  const avatar = String(userData?.image);
+
   return (
-    <div className={styles.profileContainer}>
+    <div className="flex items-center">
       {userData && (
         <>
-          <Image
-            src={String(userData.image)}
-            alt={`Profile picture of ${userData?.name}`}
-            width={88}
-            height={88}
-            quality={80}
-            priority
-          />
+          <Avatar className="mr-6 h-auto w-[88px]">
+            <AvatarImage
+              src={avatar}
+              alt={`Profile picture ${userData.name}`}
+            />
+            <AvatarFallback>{userData.name}</AvatarFallback>
+          </Avatar>
+
           <div>
-            <strong>{userData.name}</strong>
-            <p>
-              <img src="/icons/level.svg" alt="Level" />
-              Level {level}
-            </p>
+            <strong className="text-2xl font-semibold text-title">
+              {userData.name}
+            </strong>
+            <div className="flex items-center justify-start">
+              <Icons.level className="mr-2" />
+              <p className="mr-2 text-base">Level {level}</p>
+            </div>
           </div>
         </>
       )}

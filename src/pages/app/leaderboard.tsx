@@ -4,8 +4,7 @@ import { InferGetServerSidePropsType } from 'next';
 import { withSSRAuth } from 'utils/withSSRAuth';
 import { trpc } from 'utils/api';
 import { ssrInit } from 'server/api/ssr';
-
-import styles from 'styles/pages/Leaderboard.module.css';
+import { Icons } from 'components/icons';
 
 export const getServerSideProps = withSSRAuth(async ctx => {
   const ssr = await ssrInit(ctx);
@@ -27,43 +26,48 @@ export default function Leaderboard({
   });
 
   return (
-    <div className={styles.leaderboardContainer}>
+    <div className="mx-auto flex h-screen max-w-5xl flex-shrink flex-grow flex-col">
       <Head>
         <title>Leaderboard | move.it</title>
       </Head>
 
-      <header>
-        <h1>Leaderboard</h1>
-      </header>
+      <h1 className="my-10 self-start text-4xl font-semibold">Leaderboard</h1>
 
       <div>
-        <div className={styles.ranking}>
+        <div className="mb-6 grid grid-cols-ranking font-bold text-text brightness-150">
           <span>POSITION</span>
           <span>USER</span>
           <span>CHALLENGES</span>
           <span>EXPERIENCE</span>
         </div>
         {(usersQuery?.data ?? []).map((user, index) => (
-          <div key={user.id} className={styles.position}>
-            <span>{index + 1}</span>
-            <div className={styles.profile}>
+          <div
+            key={user.id}
+            className="mb-2 grid grid-cols-ranking items-center rounded-sm bg-white"
+          >
+            <span className="flex h-full items-center justify-center border-r-4 border-solid border-background text-2xl">
+              {index + 1}
+            </span>
+            <div className="flex items-center p-4 text-title">
               <img
                 src={String(user.image)}
                 alt={`Profile pricture of ${user.name}`}
+                className="rounded-f mr-4 h-16 w-16 rounded-full"
               />
-              <div>
-                <span>{user.name}</span>
-                <p>
-                  <img src="/icons/level.svg" alt="Level" />
-                  Level {user.level}
-                </p>
+              <div className="inline-flex flex-col items-start text-title">
+                <span className="text-xl font-bold">{user.name}</span>
+                <span className="flex items-center gap-1">
+                  <Icons.level className="mr-1" />
+                  <p>Level {user.level}</p>
+                </span>
               </div>
             </div>
             <p>
-              <span>{user.challengesCompleted}</span> completed
+              <span className="text-primary">{user.challengesCompleted}</span>{' '}
+              completed
             </p>
             <p>
-              <span>{user.currentExperience}</span> xp
+              <span className="text-primary">{user.currentExperience}</span> xp
             </p>
           </div>
         ))}

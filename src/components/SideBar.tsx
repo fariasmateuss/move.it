@@ -1,19 +1,19 @@
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { LuHome, LuAward, LuLogOut } from 'react-icons/lu';
 
 import {
   DASHBOARD_PAGE_PATH,
   LEADERBOARD_PAGE_PATH,
 } from 'constants/routesPaths';
+import { cn } from 'lib/utils';
 
-import styles from 'styles/components/SideBar.module.css';
-import clsx from 'clsx';
+import { Button } from './ui/button';
+import { Icons } from './icons';
 
 const SIDEBAR_NAVIGATION = [
-  { path: DASHBOARD_PAGE_PATH, Icon: LuHome },
-  { path: LEADERBOARD_PAGE_PATH, Icon: LuAward },
+  { path: DASHBOARD_PAGE_PATH, Icon: Icons.home },
+  { path: LEADERBOARD_PAGE_PATH, Icon: Icons.award },
 ];
 
 export function SideBar() {
@@ -22,37 +22,51 @@ export function SideBar() {
   const handleLogOut = () => signOut();
 
   return (
-    <nav className={styles.sideBarContainer}>
-      <Image
-        src="/images/logo.png"
-        alt="Move.it"
-        width={48}
-        height={42}
-        priority
-        quality={100}
-        className={styles.sideBarLogo}
-      />
-      <div className={styles.sideBarNav}>
+    <nav className="relative flex h-screen w-28 flex-col justify-between bg-white align-middle">
+      <div className="mt-8 flex justify-center">
+        <Image
+          src="/images/logo.png"
+          alt="Move.it"
+          width={48}
+          height={42}
+          priority
+          quality={100}
+        />
+      </div>
+
+      <div className="flex w-full flex-col gap-8">
         {SIDEBAR_NAVIGATION.map(({ path, Icon }) => (
-          <button
+          <Button
+            variant="ghost"
             key={path}
-            className={clsx(route.pathname === path && styles.selected)}
+            className={cn(
+              route.pathname === path && 'text-primary',
+              'animate hover:text- relative flex h-14 justify-center bg-transparent align-middle hover:bg-transparent hover:text-primary',
+            )}
             type="button"
             onClick={() => route.push(path)}
           >
-            <div className={clsx(route.pathname === path && styles.selected)} />
-            <Icon size={32} />
-          </button>
+            <div
+              className={cn(
+                route.pathname === path && 'bg-primary',
+                'absolute left-0 h-full w-[5px] rounded-r-md',
+              )}
+            />
+            <Icon className="size-8" />
+          </Button>
         ))}
       </div>
 
-      <button
+      <Button
+        variant="ghost"
         type="button"
-        className={styles.logOutButton}
+        className={cn(
+          'mb-8 bg-transparent text-red-500 hover:bg-transparent hover:text-red-600 ',
+        )}
         onClick={handleLogOut}
       >
-        <LuLogOut size={32} color="var(--red)" />
-      </button>
+        <Icons.logout className="size-8" />
+      </Button>
     </nav>
   );
 }

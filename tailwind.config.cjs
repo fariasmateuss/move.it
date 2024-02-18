@@ -24,6 +24,15 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        text: {
+          DEFAULT: 'hsl(var(--text))',
+        },
+        highlight: {
+          DEFAULT: 'hsl(var(--highlight))',
+        },
+        title: 'hsl(var(--title))',
+        white: 'hsl(var(--white))',
+        'gray-line': 'hsl(var(--gray-line))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -71,6 +80,16 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      boxShadow: {
+        'custom-blur': '0 0 60px rgba(0, 0, 0, 0.05)',
+        'text-blur': '0px 10px 16px rgba(89, 101, 224, 0.3)',
+      },
+      backgroundImage: {
+        levelup: "url('/images/levelup.svg')",
+      },
+      gridTemplateColumns: {
+        ranking: '0.5fr  3fr  1fr  1fr',
       },
     },
   },

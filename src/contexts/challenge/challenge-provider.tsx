@@ -6,17 +6,17 @@ import {
   useState,
 } from 'react';
 
-import challenges from 'data/challenges.json';
 import { trpc } from 'utils/api';
-import { LevelUpModal } from 'components/LevelUpModal';
-import { useLevelUpMutation } from 'hooks/useLevelup';
-import { useChallengeCompletedMutation } from 'hooks/useChallengeCompleted';
+import { useLevelUpMutation } from 'hooks/use-level-up';
+import { useChallengeCompletedMutation } from 'hooks/use-challenge-completed';
+import challenges from 'data/challenges.json';
 
 import {
   ChallengeDispatchProvider,
   ChallengeStateProvider,
-} from './ChallengeContext';
+} from './challenge-context';
 import { Challenge } from './types';
+import { LevelUpDialog } from 'components/level-up-dialog';
 
 export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   const utils = trpc.useUtils();
@@ -51,7 +51,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   }, [level, levelUpMutation]);
 
   const closeLevelUpModal = useCallback(() => {
-    setIsLevelUpModalOpen(false);
+    setIsLevelUpModalOpen(prevState => !prevState);
   }, []);
 
   const startNewChallenge = useCallback(() => {
@@ -113,6 +113,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       challengesCompleted,
       activeChallenge,
       experienceToNextLevel,
+      isLevelUpModalOpen,
     }),
     [
       level,
@@ -120,6 +121,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       challengesCompleted,
       activeChallenge,
       experienceToNextLevel,
+      isLevelUpModalOpen,
     ],
   );
 
@@ -145,7 +147,11 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
       <ChallengeDispatchProvider value={challengeDispatch}>
         {children}
 
-        {isLevelUpModalOpen && <LevelUpModal />}
+        <LevelUpDialog
+          level={level}
+          onOpenChange={setIsLevelUpModalOpen}
+          open={isLevelUpModalOpen}
+        />
       </ChallengeDispatchProvider>
     </ChallengeStateProvider>
   );

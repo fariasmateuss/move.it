@@ -1,4 +1,4 @@
-import { useChallengeDispatch } from 'contexts/challenge/ChallengeContext';
+import { useChallengeDispatch } from 'contexts/challenge/challenge-context';
 import {
   PropsWithChildren,
   useCallback,
@@ -9,13 +9,13 @@ import {
 import {
   CountdownDispatchProvider,
   CountdownStateProvider,
-} from './CountdownContext';
+} from './countdown-context';
 
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
   const { startNewChallenge } = useChallengeDispatch();
-  const [time, setTime] = useState(30 * 60);
+  const [time, setTime] = useState(0.1 * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
 

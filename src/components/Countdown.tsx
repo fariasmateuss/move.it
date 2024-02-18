@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { Rajdhani } from 'next/font/google';
-import { LuX } from 'react-icons/lu';
-import { clsx } from 'clsx';
 
-import styles from 'styles/components/Countdown.module.css';
 import {
   useCountdownDispatch,
   useCountdownState,
-} from 'contexts/countdown/CountdownContext';
+} from 'contexts/countdown/countdown-context';
+
+import { Button } from './ui/button';
+import { Icons } from './icons';
 
 const rajdhaniVariable = Rajdhani({
   weight: '600',
@@ -17,7 +16,6 @@ const rajdhaniVariable = Rajdhani({
 export function Countdown() {
   const { minutes, seconds, hasFinished, isActive } = useCountdownState();
   const { startCountdown, resetCountdown } = useCountdownDispatch();
-  const [closeHover, setCloseHover] = useState(false);
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondsLeft, secondsRight] = String(seconds)
@@ -26,56 +24,56 @@ export function Countdown() {
 
   return (
     <div className={rajdhaniVariable.className}>
-      <div className={styles.countdownContainer}>
-        <div>
-          <span>{minuteLeft}</span>
-          <span>{minuteRight}</span>
+      <div className="flex items-center text-title">
+        <div className="flex flex-grow justify-evenly border-r-4 bg-white text-center text-9xl shadow-custom-blur">
+          <span className="flex-grow border-r border-solid border-gray-line">
+            {minuteLeft}
+          </span>
+          <span className="flex-grow border-l border-solid border-gray-line">
+            {minuteRight}
+          </span>
         </div>
-        <span>:</span>
-        <div>
-          <span>{secondsLeft}</span>
-          <span>{secondsRight}</span>
+        <span className="space-x-2 text-8xl">:</span>
+        <div className="flex flex-grow justify-evenly border-r-4 bg-white text-center text-9xl shadow-custom-blur">
+          <span className="flex-grow border-r border-solid border-gray-line">
+            {secondsLeft}
+          </span>
+          <span className="flex-grow border-l border-solid border-gray-line">
+            {secondsRight}
+          </span>
         </div>
       </div>
 
       {hasFinished ? (
-        <button
+        <Button
           disabled
           onClick={resetCountdown}
           type="button"
-          className={styles.countdownButton}
+          className="mt-8 h-20 w-full rounded-sm border-0 bg-white text-xl font-semibold text-title transition duration-200 disabled:opacity-100"
         >
           Cycle Completed
-          <img src="/icons/check-circle.svg" alt="Check Circle" />
-        </button>
+          <Icons.checkCircle className="ml-2 text-base" />
+        </Button>
       ) : (
         <>
           {isActive ? (
-            <button
+            <Button
               onClick={resetCountdown}
               type="button"
-              onMouseEnter={() => setCloseHover(true)}
-              onMouseLeave={() => setCloseHover(false)}
-              className={clsx(
-                styles.countdownButton,
-                styles.countdownButtonActive,
-              )}
+              className="mt-8 h-20 w-full rounded-sm border-0 bg-white text-xl font-semibold text-title transition duration-200 hover:bg-red-500 hover:text-white"
             >
-              Quit
-              <LuX
-                size={24}
-                color={closeHover ? 'var(--white)' : 'var(--text)'}
-              />
-            </button>
+              Stop
+              <Icons.close className="ml-2 text-base" />
+            </Button>
           ) : (
-            <button
+            <Button
               onClick={startCountdown}
               type="button"
-              className={styles.countdownButton}
+              className="mt-8 h-20 w-full rounded-sm border-0 bg-primary text-xl font-semibold text-white transition duration-200"
             >
               Start
-              <img src="/icons/play.svg" alt="Play" />
-            </button>
+              <Icons.play className="ml-2 text-base" />
+            </Button>
           )}
         </>
       )}

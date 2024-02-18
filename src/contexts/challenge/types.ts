@@ -10,6 +10,7 @@ export type ChallengeStateContextData = {
   challengesCompleted: number;
   activeChallenge: Challenge | null;
   experienceToNextLevel: number;
+  isLevelUpModalOpen: boolean;
 };
 
 export type ChallengeDispatchContextData = {

@@ -1,12 +1,10 @@
 import { PropsWithChildren } from 'react';
 
-import styles from 'styles/components/Layout.module.css';
-
-import { SideBar } from './SideBar';
+import { SideBar } from './sidebar';
 
 export function Layout({ children }: PropsWithChildren<unknown>) {
   return (
-    <main className={styles.container}>
+    <main className="flex">
       <SideBar />
       {children}
     </main>

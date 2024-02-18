@@ -1,18 +1,16 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
-import { ChallengeBox } from 'components/ChallengeBox';
-import { CompletedChallenges } from 'components/CompletedChallenges';
-import { Countdown } from 'components/Countdown';
-import { ExperienceBar } from 'components/ExperienceBar';
-import { Profile } from 'components/Profile';
+import { ChallengeBox } from 'components/challenge-box';
+import { CompletedChallenges } from 'components/completed-challenges';
+import { Countdown } from 'components/countdown';
+import { ExperienceBar } from 'components/experience-bar';
+import { Profile } from 'components/profile';
 
-import { CountdownProvider } from 'contexts/countdown/CountdownProvider';
-import { ChallengeProvider } from 'contexts/challenge/ChallengeProvider';
+import { CountdownProvider } from 'contexts/countdown/countdown-provider';
+import { ChallengeProvider } from 'contexts/challenge/challenge-provider';
 import { withSSRAuth } from 'utils/withSSRAuth';
 import { ssrInit } from 'server/api/ssr';
-
-import styles from 'styles/pages/Dashboard.module.css';
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const ssr = await ssrInit(ctx);
@@ -27,12 +25,12 @@ export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
 
 function DashboardContent() {
   return (
-    <div className={styles.container}>
+    <div className="mx-auto flex h-screen max-w-[992px] flex-col px-9 py-8">
       <Head>
         <title>Homapage | Move.it</title>
       </Head>
       <ExperienceBar />
-      <section>
+      <section className="grid flex-1 grid-cols-2 content-center gap-24">
         <div>
           <Profile />
           <CompletedChallenges />
