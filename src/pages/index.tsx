@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { withSSRGuest } from 'utils/withSSRGuest';
+import { withSSRGuest } from 'utils/with-ssr-guest';
 import { DASHBOARD_PAGE_PATH } from 'constants/routesPaths';
 import { Button } from 'components/ui/button';
 import { Input } from 'components/ui/input';

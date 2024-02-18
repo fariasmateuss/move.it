@@ -9,7 +9,7 @@ import { Profile } from 'components/profile';
 
 import { CountdownProvider } from 'contexts/countdown/countdown-provider';
 import { ChallengeProvider } from 'contexts/challenge/challenge-provider';
-import { withSSRAuth } from 'utils/withSSRAuth';
+import { withSSRAuth } from 'utils/with-ssr-auth';
 import { ssrInit } from 'server/api/ssr';
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
