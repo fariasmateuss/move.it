@@ -30,6 +30,7 @@ export function AppProvider({
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            refetchOnMount: false,
           },
         },
       }),

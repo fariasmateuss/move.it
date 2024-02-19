@@ -1,22 +1,33 @@
-import { GetServerSideProps } from 'next';
-import Head from 'next/head';
+import type { GetServerSideProps } from 'next';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import SuperJSON from 'superjson';
 
 import { CountdownProvider } from 'contexts/countdown/countdown-provider';
 import { ChallengeProvider } from 'contexts/challenge/challenge-provider';
-import { withSSRAuth } from 'utils/with-ssr-auth';
-import { ssrInit } from 'server/api/ssr';
 import { DashboardPage } from 'templates/dashboard';
+import { auth } from 'server/auth';
+import { type AppRouter, appRouter } from 'server/api/root';
+import { createInnerTRPCContext } from 'server/api/trpc';
 
-export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  const ssr = await ssrInit(ctx);
-  await ssr.user.getMe.fetch();
+export const getServerSideProps = (async ctx => {
+  const session = await auth(ctx.req, ctx.res);
+
+  const helper = createServerSideHelpers<AppRouter>({
+    router: appRouter,
+    ctx: createInnerTRPCContext({
+      session,
+    }),
+    transformer: SuperJSON,
+  });
+
+  await helper.user.getMe.fetch();
 
   return {
     props: {
-      trpcState: ssr.dehydrate(),
+      trpcState: helper.dehydrate(),
     },
   };
-});
+}) satisfies GetServerSideProps;
 
 export default function Dashboard() {
   return (

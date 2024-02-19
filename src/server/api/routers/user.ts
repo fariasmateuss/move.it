@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createTRPCRouter, protectedProcedure } from '../trpc';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const userRouter = createTRPCRouter({
   getMe: protectedProcedure.query(async ({ ctx }) => {
@@ -11,7 +11,7 @@ export const userRouter = createTRPCRouter({
 
     return user;
   }),
-  allUsersOrderByLevel: protectedProcedure.query(async ({ ctx }) => {
+  allUsersOrderByLevel: publicProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.findMany({
       orderBy: {
         level: 'desc',

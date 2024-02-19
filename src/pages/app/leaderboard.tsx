@@ -1,29 +1,48 @@
 import * as React from 'react';
-import { InferGetServerSidePropsType } from 'next';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import { useRouter } from 'next/router';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-import { withSSRAuth } from 'utils/with-ssr-auth';
-import { trpc } from 'utils/api';
-import { ssrInit } from 'server/api/ssr';
+import { RouterOutputs, trpc } from 'utils/api';
 import { LeaderboardPage } from 'templates/leaderboard';
+import { type AppRouter, appRouter } from 'server/api/root';
+import SuperJSON from 'superjson';
+import { createInnerTRPCContext } from 'server/api/trpc';
 
-export const getServerSideProps = withSSRAuth(async ctx => {
-  const ssr = await ssrInit(ctx);
-  const users = await ssr.user.allUsersOrderByLevel.fetch();
+export type User = RouterOutputs['user']['getMe'];
+
+export const getStaticProps = (async () => {
+  const session = null;
+  const helper = createServerSideHelpers<AppRouter>({
+    router: appRouter,
+    ctx: createInnerTRPCContext({
+      session,
+    }),
+    transformer: SuperJSON,
+  });
+
+  const users = await helper.user.allUsersOrderByLevel.fetch();
 
   return {
     props: {
-      trpcState: ssr.dehydrate(),
+      trpcState: helper.dehydrate(),
       users,
     },
   };
-});
+}) satisfies GetStaticProps<{ users: User[] }>;
 
 export default function Leaderboard({
   users,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { data } = trpc.user.allUsersOrderByLevel.useQuery(undefined, {
     initialData: users,
   });
+
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return <LeaderboardPage users={data} />;
 }
