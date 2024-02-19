@@ -9,9 +9,10 @@ import { columns } from './components/columns';
 type User = RouterOutputs['user']['getMe'];
 type LeaderboardPageProps = {
   users: User[];
+  isLoading: boolean;
 };
 
-export function LeaderboardPage({ users }: LeaderboardPageProps) {
+export function LeaderboardPage({ users, isLoading }: LeaderboardPageProps) {
   return (
     <div className="mx-auto flex h-screen max-w-5xl flex-shrink flex-grow flex-col">
       <Head>
@@ -20,7 +21,7 @@ export function LeaderboardPage({ users }: LeaderboardPageProps) {
 
       <h1 className="my-10 self-start text-4xl font-semibold">Leaderboard</h1>
 
-      <DataTable data={users} columns={columns} />
+      <DataTable isLoading={isLoading} data={users} columns={columns} />
     </div>
   );
 }

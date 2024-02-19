@@ -40,9 +40,5 @@ export default function Leaderboard({
 
   const router = useRouter();
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
-  return <LeaderboardPage users={data} />;
+  return <LeaderboardPage isLoading={router.isFallback} users={data} />;
 }

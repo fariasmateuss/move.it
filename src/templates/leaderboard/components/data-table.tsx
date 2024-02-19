@@ -10,21 +10,34 @@ import {
 import { type RouterOutputs } from 'utils/api';
 
 import { DataTablePagination } from './data-table-pagination';
+import { skaleton } from './skaleton-table';
 
 export type User = RouterOutputs['user']['getMe'];
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading: boolean;
 };
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isLoading,
 }: DataTableProps<TData, TValue>) {
+  const tableData = React.useMemo(
+    () => (isLoading ? Array(7).fill({}) : data),
+    [isLoading, data],
+  );
+
+  const tableColumns = React.useMemo(
+    () => (isLoading ? skaleton : columns),
+    [isLoading, columns, skaleton],
+  );
+
   const table = useReactTable({
-    data,
-    columns,
+    data: tableData,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {

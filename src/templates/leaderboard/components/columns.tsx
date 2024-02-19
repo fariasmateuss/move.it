@@ -36,7 +36,7 @@ export const columns: ColumnDef<User>[] = [
             <span className="text-xl font-bold">{info.row.original?.name}</span>
 
             <span className="flex items-center gap-1">
-              <Icons.level className="mr-1" />
+              <Icons.level />
 
               <p>Level {info.row.original?.level}</p>
             </span>
