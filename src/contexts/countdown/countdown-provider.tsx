@@ -1,11 +1,6 @@
+import * as React from 'react';
+
 import { useChallengeDispatch } from 'contexts/challenge/challenge-context';
-import {
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
 import {
   CountdownDispatchProvider,
   CountdownStateProvider,
@@ -13,27 +8,29 @@ import {
 
 let countdownTimeout: NodeJS.Timeout;
 
-export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
+export function CountdownProvider({
+  children,
+}: React.PropsWithChildren<unknown>) {
   const { startNewChallenge } = useChallengeDispatch();
-  const [time, setTime] = useState(0.1 * 60);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
+  const [time, setTime] = React.useState(0.1 * 60);
+  const [isActive, setIsActive] = React.useState(false);
+  const [hasFinished, setHasFinished] = React.useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
-  const startCountdown = useCallback(() => {
+  const startCountdown = React.useCallback(() => {
     setIsActive(true);
   }, []);
 
-  const resetCountdown = useCallback(() => {
+  const resetCountdown = React.useCallback(() => {
     clearTimeout(countdownTimeout);
     setIsActive(false);
     setHasFinished(false);
     setTime(0.1 * 60);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isActive && time > 0) {
       countdownTimeout = setTimeout(() => {
         setTime(time - 1);
@@ -45,7 +42,7 @@ export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
     }
   }, [isActive, time, startNewChallenge]);
 
-  const countdownState = useMemo(
+  const countdownState = React.useMemo(
     () => ({
       minutes,
       seconds,
@@ -55,7 +52,7 @@ export function CountdownProvider({ children }: PropsWithChildren<unknown>) {
     [minutes, seconds, hasFinished, isActive],
   );
 
-  const countdownDispatch = useMemo(
+  const countdownDispatch = React.useMemo(
     () => ({ startCountdown, resetCountdown }),
     [startCountdown, resetCountdown],
   );

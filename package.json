@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=* next dev",
+    "dev": "next dev",
+    "dev:debug": "DEBUG=* next dev",
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",

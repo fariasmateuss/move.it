@@ -4,8 +4,8 @@ import {
 } from 'contexts/challenge/challenge-context';
 import { useCountdownDispatch } from 'contexts/countdown/countdown-context';
 
-import { Button } from './ui/button';
-import { Icons } from './icons';
+import { Button } from 'components/ui/button';
+import { Icons } from 'components/icons';
 
 const shouldRenderChallengeIcon = (typeOfChallenge: string) =>
   typeOfChallenge === 'body' ? <Icons.body /> : <Icons.eye />;

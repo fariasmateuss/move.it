@@ -5,8 +5,8 @@ import {
   useCountdownState,
 } from 'contexts/countdown/countdown-context';
 
-import { Button } from './ui/button';
-import { Icons } from './icons';
+import { Button } from 'components/ui/button';
+import { Icons } from 'components/icons';
 
 const rajdhaniVariable = Rajdhani({
   weight: '600',

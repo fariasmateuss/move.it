@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { Icons } from './icons';
+import { Icons } from 'components/icons';
 
 type LevelUpDialogProps = {
   open: boolean;
@@ -27,7 +27,7 @@ export function LevelUpDialog({
             <Icons.close />
           </Dialog.Close>
 
-          <header className="bg-levelup mb-6 flex w-[inherit] items-center justify-center bg-contain bg-center bg-no-repeat text-[140px] font-semibold leading-[100px] text-primary">
+          <header className="mb-6 flex w-[inherit] items-center justify-center bg-levelup bg-contain bg-center bg-no-repeat text-[140px] font-semibold leading-[100px] text-primary">
             {level}
           </header>
 

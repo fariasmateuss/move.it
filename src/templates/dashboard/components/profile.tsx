@@ -2,7 +2,7 @@ import { trpc } from 'utils/api';
 import { useChallengeState } from 'contexts/challenge/challenge-context';
 import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar';
 
-import { Icons } from './icons';
+import { Icons } from 'components/icons';
 
 export function Profile() {
   const { level } = useChallengeState();

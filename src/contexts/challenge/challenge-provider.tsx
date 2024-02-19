@@ -1,24 +1,21 @@
-import {
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import * as React from 'react';
 
 import { trpc } from 'utils/api';
 import { useLevelUpMutation } from 'hooks/use-level-up';
 import { useChallengeCompletedMutation } from 'hooks/use-challenge-completed';
+import { LevelUpDialog } from 'components/level-up-dialog';
 import challenges from 'data/challenges.json';
 
 import {
   ChallengeDispatchProvider,
   ChallengeStateProvider,
 } from './challenge-context';
-import { Challenge } from './types';
-import { LevelUpDialog } from 'components/level-up-dialog';
 
-export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
+import { Challenge } from './types';
+
+export function ChallengeProvider({
+  children,
+}: React.PropsWithChildren<unknown>) {
   const utils = trpc.useUtils();
   const userData = utils.user.getMe.getData();
 
@@ -29,18 +26,17 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
   const levelUpMutation = useLevelUpMutation();
   const challengeCompletedMutation = useChallengeCompletedMutation();
 
-  const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(
-    null,
-  );
-  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+  const [activeChallenge, setActiveChallenge] =
+    React.useState<Challenge | null>(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = React.useState(false);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
-  useEffect(() => {
+  React.useEffect(() => {
     Notification.requestPermission();
   }, []);
 
-  const levelUp = useCallback(() => {
+  const levelUp = React.useCallback(() => {
     levelUpMutation.mutate({
       data: {
         level: level + 1,
@@ -50,11 +46,11 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     setIsLevelUpModalOpen(true);
   }, [level, levelUpMutation]);
 
-  const closeLevelUpModal = useCallback(() => {
+  const closeLevelUpModal = React.useCallback(() => {
     setIsLevelUpModalOpen(prevState => !prevState);
   }, []);
 
-  const startNewChallenge = useCallback(() => {
+  const startNewChallenge = React.useCallback(() => {
     const rondomChallengeIndex = Math.floor(Math.random() * challenges.length);
     const challenge = challenges[rondomChallengeIndex];
 
@@ -73,11 +69,11 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     return audio;
   }, []);
 
-  const resetChallenge = useCallback(() => {
+  const resetChallenge = React.useCallback(() => {
     setActiveChallenge(null);
   }, []);
 
-  const completedChallenge = useCallback(() => {
+  const completedChallenge = React.useCallback(() => {
     if (!activeChallenge) return;
 
     const { amount } = activeChallenge;
@@ -106,7 +102,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     challengeCompletedMutation,
   ]);
 
-  const challengeState = useMemo(
+  const challengeState = React.useMemo(
     () => ({
       level,
       currentExperience,
@@ -125,7 +121,7 @@ export function ChallengeProvider({ children }: PropsWithChildren<unknown>) {
     ],
   );
 
-  const challengeDispatch = useMemo(
+  const challengeDispatch = React.useMemo(
     () => ({
       startNewChallenge,
       levelUp,

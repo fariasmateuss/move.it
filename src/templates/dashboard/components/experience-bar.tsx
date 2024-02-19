@@ -1,6 +1,6 @@
 import { useChallengeState } from 'contexts/challenge/challenge-context';
 
-import { Progress } from './ui/progress';
+import { Progress } from 'components/ui/progress';
 
 export function ExperienceBar() {
   const { currentExperience, experienceToNextLevel } = useChallengeState();
