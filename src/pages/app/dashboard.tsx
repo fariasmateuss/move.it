@@ -24,6 +24,7 @@ export const getServerSideProps = (async ctx => {
 
   return {
     props: {
+      session,
       trpcState: helper.dehydrate(),
     },
   };
