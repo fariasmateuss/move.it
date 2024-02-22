@@ -1,12 +1,14 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { PropsWithChildren, useState } from 'react';
+import * as React from 'react';
 import { NextComponentType, NextPageContext } from 'next';
 import { SessionProvider, SessionProviderProps } from 'next-auth/react';
 
 import { Layout } from 'components/layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { ProgressBar } from 'components/progress-bar';
 import SignInPage from 'pages';
 
 type AppProps = SessionProviderProps & {
@@ -22,15 +24,16 @@ export function AppProvider({
   children,
   session,
   Component,
-}: PropsWithChildren<AppProps>) {
+}: React.PropsWithChildren<AppProps>) {
   const shouldRenderLayout = !PAGE_LAYOUT_BLACK_LIST.includes(Component.name);
-  const [queryClient] = useState(
+
+  const [queryClient] = React.useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnWindowFocus: false,
             refetchOnMount: false,
+            refetchOnWindowFocus: false,
           },
         },
       }),
@@ -40,7 +43,7 @@ export function AppProvider({
     <QueryClientProvider client={queryClient}>
       <SessionProvider session={session}>
         {shouldRenderLayout ? <Layout>{children}</Layout> : children}
-
+        <ProgressBar />
         <ReactQueryDevtools initialIsOpen position="bottom-right" />
       </SessionProvider>
     </QueryClientProvider>
