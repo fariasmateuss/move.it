@@ -1,4 +1,4 @@
-import { trpc } from 'utils/api';
+import { trpc } from 'utils/trpc';
 
 export function useLevelUpMutation() {
   const utils = trpc.useUtils();

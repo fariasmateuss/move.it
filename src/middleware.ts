@@ -1,5 +1,5 @@
 import { TOKEN_STORAGE_KEY } from 'constants/cookies-storage';
-import { DASHBOARD_PAGE_PATH, SIGN_IN_PAGE_PATH } from 'constants/routesPaths';
+import { DASHBOARD_PAGE_PATH, SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {

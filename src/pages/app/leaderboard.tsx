@@ -2,12 +2,14 @@ import * as React from 'react';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import SuperJSON from 'superjson';
+import Head from 'next/head';
 
-import { RouterOutputs, trpc } from 'utils/api';
-import { LeaderboardPage } from 'templates/leaderboard';
-import { type AppRouter, appRouter } from 'server/api/root';
-import { createInnerTRPCContext } from 'server/api/trpc';
-import { auth } from 'server/auth';
+import { RouterOutputs, trpc } from 'utils/trpc';
+import { type AppRouter, appRouter } from 'server/root';
+import { createInnerTRPCContext } from 'server/trpc';
+import { DataTable } from 'components/leaderboard/data-table';
+import { columns } from 'components/leaderboard/columns';
+import { auth } from 'lib/auth';
 
 export type User = RouterOutputs['user']['getMe'];
 
@@ -43,5 +45,15 @@ export default function Leaderboard({
     },
   );
 
-  return <LeaderboardPage isLoading={isFetching} users={data} />;
+  return (
+    <div className="mx-auto flex h-screen max-w-5xl flex-shrink flex-grow flex-col">
+      <Head>
+        <title>Leaderboard | move.it</title>
+      </Head>
+
+      <h1 className="my-10 self-start text-4xl font-semibold">Leaderboard</h1>
+
+      <DataTable isLoading={isFetching} data={users} columns={columns} />
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { trpc } from 'utils/api';
+import { trpc } from 'utils/trpc';
 import { useLevelUpMutation } from 'hooks/use-level-up';
 import { useChallengeCompletedMutation } from 'hooks/use-challenge-completed';
 import { LevelUpDialog } from 'components/level-up-dialog';
