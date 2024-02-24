@@ -64,23 +64,6 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      if (url.startsWith('/')) {
-        return `${baseUrl}${url}`;
-      }
-
-      const urlValue = !url.includes('http')
-        ? new URL('https://' + url)
-        : new URL(url);
-
-      if (urlValue.origin === baseUrl) {
-        return url;
-      }
-
-      console.log(baseUrl);
-
-      return baseUrl;
-    },
     async session({ token, session }) {
       if (token) {
         session!.user!.id = token.id;
