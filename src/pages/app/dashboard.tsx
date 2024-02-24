@@ -1,38 +1,48 @@
-import { GetServerSideProps } from 'next';
+import type { GetServerSideProps } from 'next';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import SuperJSON from 'superjson';
 import Head from 'next/head';
 
-import { ChallengeBox } from 'components/ChallengeBox';
-import { CompletedChallenges } from 'components/CompletedChallenges';
-import { Countdown } from 'components/Countdown';
-import { ExperienceBar } from 'components/ExperienceBar';
-import { Profile } from 'components/Profile';
+import { CountdownProvider } from 'contexts/countdown/countdown-provider';
+import { ChallengeProvider } from 'contexts/challenge/challenge-provider';
+import { ChallengeBox } from 'components/dashboard/challenge-box';
+import { CompletedChallenges } from 'components/dashboard/completed-challenges';
+import { Countdown } from 'components/dashboard/countdown';
+import { ExperienceBar } from 'components/dashboard/experience-bar';
+import { Profile } from 'components/dashboard/profile';
+import { type AppRouter, appRouter } from 'server/root';
+import { createInnerTRPCContext } from 'server/trpc';
+import { auth } from 'lib/auth';
 
-import { CountdownProvider } from 'contexts/countdown/CountdownProvider';
-import { ChallengeProvider } from 'contexts/challenge/ChallengeProvider';
-import { withSSRAuth } from 'utils/withSSRAuth';
-import { ssrInit } from 'server/api/ssr';
+export const getServerSideProps = (async ctx => {
+  const session = await auth(ctx.req, ctx.res);
 
-import styles from 'styles/pages/Dashboard.module.css';
+  const helper = createServerSideHelpers<AppRouter>({
+    router: appRouter,
+    ctx: createInnerTRPCContext({
+      session,
+    }),
+    transformer: SuperJSON,
+  });
 
-export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  const ssr = await ssrInit(ctx);
-  await ssr.user.getMe.fetch();
+  await helper.user.getMe.fetch();
 
   return {
     props: {
-      trpcState: ssr.dehydrate(),
+      session,
+      trpcState: helper.dehydrate(),
     },
   };
-});
+}) satisfies GetServerSideProps;
 
 function DashboardContent() {
   return (
-    <div className={styles.container}>
+    <div className="mx-auto flex h-screen max-w-[992px] flex-col px-9 py-8">
       <Head>
-        <title>Homapage | Move.it</title>
+        <title>Homapage | move.it</title>
       </Head>
       <ExperienceBar />
-      <section>
+      <section className="grid flex-1 grid-cols-2 content-center gap-24">
         <div>
           <Profile />
           <CompletedChallenges />
@@ -46,7 +56,7 @@ function DashboardContent() {
   );
 }
 
-export default function DashboardContainer() {
+export default function Dashboard() {
   return (
     <ChallengeProvider>
       <CountdownProvider>

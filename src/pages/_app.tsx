@@ -2,7 +2,7 @@ import type { AppType } from 'next/app';
 import { Inter } from 'next/font/google';
 import { SessionProviderProps } from 'next-auth/react';
 
-import { trpc } from 'utils/api';
+import { trpc } from 'utils/trpc';
 import { AppProvider } from 'contexts';
 import 'styles/global.css';
 

@@ -1,54 +1,44 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --white: #fff;
-  --background: #f2f3f5;
-  --gray-line: #dcdde0;
-  --text: #666666;
-  --text-highlight: #b3b9ff;
-  --title: #2e384d;
-  --red: #e83f5b;
-  --green: #4cd62b;
-  --blue: #5965e0;
-  --blue-secondary: #4953B8;
-}
+@layer base {
+  :root {
+    --background: 220, 13%, 95%;
+    --foreground: 222.2 84% 4.9%;
 
-body {
-  background: #f2f3f5;
-  color: #666;
-}
+    --text: 0, 0%, 40%;
+    --highlight: 235, 100%, 85%;
+    --title: 221, 25%, 24%;
+    --white: 0, 0%, 100%;
+    --gray-line: 225, 6%, 87%;
 
-body,
-input,
-textarea,
-button {
-  font-family: var(--inter-font);
-  font-weight: 400;
-  font-size: 1rem;
-}
-
-button,
-a {
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (max-width: 1080px) {
-  html {
-    font-size: 97.73%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 235, 69%, 61%;
+    --primary-foreground: 235, 44%, 50%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 235, 44%, 50%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 235, 69%, 61%;
+    --radius: 0.5rem;
   }
 }
 
-@media (max-width: 720px) {
-  html {
-    font-size: 87.5%;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-text;
   }
 }
