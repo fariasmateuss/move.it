@@ -15,7 +15,7 @@ export function SideBar() {
     <nav className="relative flex h-screen w-28 flex-col justify-between bg-white align-middle">
       <div className="mt-8 flex justify-center">
         <Image
-          src="/images/logo.png"
+          src="/images/logo.svg"
           alt="Move.it"
           width={48}
           height={42}
