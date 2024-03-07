@@ -29,8 +29,6 @@ const defaultValues: Partial<SignUpFormValues> = {
 };
 
 export function useSignUp() {
-  const [isLoading, toggleLoading] = React.useState(false);
-
   const { toast } = useToast();
 
   const form = useForm<SignUpFormValues>({
@@ -40,7 +38,8 @@ export function useSignUp() {
 
   const router = useRouter();
 
-  const signUpMutation = trpc.user.register.useMutation();
+  const { mutateAsync: signUpMutation, isLoading } =
+    trpc.auth.register.useMutation();
 
   const onSignUp: SubmitHandler<SignUpFormValues> = async ({
     name,
@@ -48,9 +47,7 @@ export function useSignUp() {
     password,
   }) => {
     try {
-      toggleLoading(true);
-
-      await signUpMutation.mutateAsync(
+      await signUpMutation(
         {
           data: {
             name,
@@ -89,8 +86,6 @@ export function useSignUp() {
         title: 'Uh oh! Something went wrong.',
         description: (error as Error).message,
       });
-    } finally {
-      toggleLoading(false);
     }
   };
 

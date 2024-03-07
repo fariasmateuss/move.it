@@ -35,7 +35,7 @@
     "lodash.noop": "^3.0.1",
     "lucide-react": "^0.323.0",
     "next": "13.2.0",
-    "next-auth": "^4.17.0",
+    "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.16",
     "react": "18.2.0",

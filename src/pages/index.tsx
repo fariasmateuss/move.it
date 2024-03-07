@@ -93,6 +93,7 @@ export default function SignIn({
               <Button
                 className="w-full bg-lime-500 text-white hover:bg-lime-600 disabled:bg-primary-foreground"
                 disabled={isButtonDisabled}
+                type="submit"
               >
                 {isLoading ? 'Redirecting' : 'Sign In with Email'}
               </Button>

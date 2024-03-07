@@ -63,7 +63,7 @@ export function useSignIn() {
     }
   };
 
-  const onProviderLogin = async (provider: string, redirect = false) => {
+  const onProviderLogin = async (provider: string, redirect = true) => {
     try {
       await signIn(provider, { callbackUrl: DASHBOARD_PAGE_PATH, redirect });
     } catch (error) {

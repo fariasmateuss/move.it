@@ -1,16 +1,16 @@
 import { NextAuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import { env } from 'env/server.mjs';
-import { SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
 
 import { exclude } from '../utils';
 import { prisma } from '../prisma';
 
 import { validatePassword } from '.';
+
+console.log(env);
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -50,25 +50,31 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
-    GoogleProvider({
-      clientId: env.GOOGLE_ID,
-      clientSecret: env.GOOGLE_SECRET,
-    }),
     GithubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
     }),
   ],
-  pages: {
-    error: SIGN_IN_PAGE_PATH,
-    signIn: SIGN_IN_PAGE_PATH,
-    signOut: SIGN_IN_PAGE_PATH,
-  },
   session: {
     strategy: 'jwt',
   },
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`;
+      }
+
+      const urlValue = !url.includes('http')
+        ? new URL('https://' + url)
+        : new URL(url);
+
+      if (urlValue.origin === baseUrl) {
+        return url;
+      }
+
+      return baseUrl;
+    },
     async session({ token, session }) {
       if (token) {
         session!.user!.id = token.id;
@@ -103,4 +109,5 @@ export const authOptions: NextAuthOptions = {
       return payload;
     },
   },
+  debug: true,
 };
