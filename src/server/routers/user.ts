@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 
-import { hashPassword } from 'lib/bcrypt';
+import { hashPassword } from 'lib/auth';
 import { signUpSchema } from 'lib/schemas/sign-up';
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';

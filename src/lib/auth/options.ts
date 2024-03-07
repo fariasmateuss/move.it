@@ -7,9 +7,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { env } from 'env/server.mjs';
 import { SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
 
-import { validatePassword } from '../bcrypt';
 import { exclude } from '../utils';
 import { prisma } from '../prisma';
+
+import { validatePassword } from '.';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -33,14 +34,14 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({ where: { email } });
 
         if (!user) {
-          throw new Error('No user Found with Email Please Sign Up...!');
+          throw new Error('No user found with e-mail! Please sign up...!');
         }
 
         if (user && user.password) {
           const checkPassword = await validatePassword(password, user.password);
 
           if (!checkPassword || user.email !== email) {
-            throw new Error("Username or Password doesn't match");
+            throw new Error("Username or password doesn't match!");
           }
 
           return exclude(user, ['password']);
@@ -58,6 +59,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_SECRET,
     }),
   ],
+  pages: {
+    error: SIGN_IN_PAGE_PATH,
+    signIn: SIGN_IN_PAGE_PATH,
+    signOut: SIGN_IN_PAGE_PATH,
+  },
   session: {
     strategy: 'jwt',
   },

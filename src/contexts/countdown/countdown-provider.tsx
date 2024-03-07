@@ -12,7 +12,7 @@ export function CountdownProvider({
   children,
 }: React.PropsWithChildren<unknown>) {
   const { startNewChallenge } = useChallengeDispatch();
-  const [time, setTime] = React.useState(0.1 * 60);
+  const [time, setTime] = React.useState(0.5 * 60);
   const [isActive, setIsActive] = React.useState(false);
   const [hasFinished, setHasFinished] = React.useState(false);
 

@@ -14,11 +14,11 @@ import {
   FormMessage,
   Form,
 } from 'components/ui/form';
-import { AuthLayout } from 'layouts/auth';
+import { AuthLayout } from 'components/layout/auth';
 import { useSignIn } from 'hooks/auth/sign-in';
 import { getCsrfToken } from 'next-auth/react';
 
-export const getServerSideProps = (async ctx => {
+export const getServerSideProps = (async () => {
   const csrfToken = String(await getCsrfToken());
 
   return {

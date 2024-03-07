@@ -4,13 +4,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as React from 'react';
 import { NextComponentType, NextPageContext } from 'next';
 import { SessionProvider, SessionProviderProps } from 'next-auth/react';
-
-import { AppLayout } from 'layouts/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ProgressBar } from 'components/progress-bar';
-import SignInPage from 'pages';
+import { AppLayout } from 'components/layout/app';
 import { Toaster } from 'components/ui/toaster';
+import SignInPage from 'pages';
 
 type AppProps = SessionProviderProps & {
   Component: NextComponentType<NextPageContext, unknown, unknown>;
