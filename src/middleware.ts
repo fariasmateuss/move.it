@@ -19,6 +19,16 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|.*\\.png$|.*\\.svg$|callback).*)',
+    /*
+     * Match all paths except for:
+     * 1. /api/ routes
+     * 2. /_next/ (Next.js internals)
+     * 4. /_static (inside /public)
+     * 5. /_vercel (Vercel internals)
+     * 6. images (inside /public)
+     * 7. sounds (inside /public)
+     * 8. Static files (e.g. /favicon.ico, /sitemap.xml, /robots.txt, etc.)
+     */
+    '/((?!api/|_next/|_static|_vercel|images|sounds[\\w-]+\\.\\w+).*)',
   ],
 };
