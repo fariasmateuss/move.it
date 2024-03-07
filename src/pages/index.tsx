@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -14,12 +15,22 @@ import {
   Form,
 } from 'components/ui/form';
 import { AuthLayout } from 'layouts/auth';
-
 import { useSignIn } from 'hooks/auth/sign-in';
-import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { getCsrfToken } from 'next-auth/react';
 
-export default function SignIn() {
+export const getServerSideProps = (async ctx => {
+  const csrfToken = String(await getCsrfToken());
+
+  return {
+    props: {
+      csrfToken,
+    },
+  };
+}) satisfies GetServerSideProps;
+
+export default function SignIn({
+  csrfToken,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { form, onProviderLogin, onLoginEmail, isButtonDisabled, isLoading } =
     useSignIn();
 
@@ -32,6 +43,7 @@ export default function SignIn() {
       <Form {...form}>
         <div className="grid w-full gap-6">
           <form onSubmit={form.handleSubmit(onLoginEmail)}>
+            <input type="hidden" name="csrfToken" defaultValue={csrfToken} />
             <div className="grid gap-2">
               <FormField
                 control={form.control}
