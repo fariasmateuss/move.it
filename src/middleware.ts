@@ -1,21 +1,13 @@
-import { TOKEN_STORAGE_KEY } from 'constants/cookies-storage';
-import { DASHBOARD_PAGE_PATH, SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
-import { NextRequest, NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
-export function middleware(request: NextRequest) {
-  const isOnSignInPage = request.nextUrl.pathname === SIGN_IN_PAGE_PATH;
-  const isAuthenticated = request.cookies.has(TOKEN_STORAGE_KEY);
+import { SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
 
-  if (isOnSignInPage && isAuthenticated) {
-    return NextResponse.redirect(new URL(DASHBOARD_PAGE_PATH, request.nextUrl));
-  }
-
-  if (!isOnSignInPage && !isAuthenticated) {
-    return NextResponse.redirect(new URL(SIGN_IN_PAGE_PATH, request.nextUrl));
-  }
-
-  return NextResponse.next();
-}
+export default withAuth({
+  pages: {
+    signIn: SIGN_IN_PAGE_PATH,
+    signOut: SIGN_IN_PAGE_PATH,
+  },
+});
 
 export const config = {
   matcher: [

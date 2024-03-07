@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { SIGN_IN_PAGE_PATH } from 'constants/routes-paths';
 
 import { env } from 'env/server.mjs';
 
@@ -9,8 +10,6 @@ import { exclude } from '../utils';
 import { prisma } from '../prisma';
 
 import { validatePassword } from '.';
-
-console.log(env);
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -55,10 +54,10 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_SECRET,
     }),
   ],
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
   },
-  secret: env.NEXTAUTH_SECRET,
   callbacks: {
     async redirect({ url, baseUrl }) {
       if (url.startsWith('/')) {
@@ -109,5 +108,4 @@ export const authOptions: NextAuthOptions = {
       return payload;
     },
   },
-  debug: true,
 };
